@@ -6,7 +6,7 @@ class Logo extends StatelessWidget {
   final String titulo;
 
   const Logo({
-   Key? key, 
+    Key? key, 
     required this.titulo
   }) : super(key: key);
 

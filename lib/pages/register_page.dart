@@ -1,9 +1,9 @@
-
-import 'package:flutter/material.dart';
 import 'package:taxis_app_public/widgets/boton_azul.dart';
-import 'package:taxis_app_public/widgets/custom_input.dart';
+import 'package:flutter/material.dart';
+
 import 'package:taxis_app_public/widgets/labels.dart';
 import 'package:taxis_app_public/widgets/logo.dart';
+import 'package:taxis_app_public/widgets/custom_input.dart';
 
 
 

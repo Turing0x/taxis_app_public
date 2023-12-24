@@ -7,7 +7,7 @@ class Labels extends StatelessWidget {
   final String subTitulo;
 
   const Labels({
-     Key? key, 
+    Key? key, 
     required this.ruta, 
     required this.titulo, 
     required this.subTitulo,
