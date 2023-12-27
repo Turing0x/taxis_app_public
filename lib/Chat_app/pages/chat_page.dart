@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:taxis_app_public/widgets/chat_message.dart';
+import 'package:taxis_app_public/Chat_app/widgets/chat_message.dart';
 
 
 class ChatPage extends StatefulWidget {

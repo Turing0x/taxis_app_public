@@ -1,13 +1,13 @@
-import 'package:taxis_app_public/widgets/boton_azul.dart';
+import 'package:taxis_app_public/Chat_app/widgets/boton_azul.dart';
 import 'package:flutter/material.dart';
 
-import 'package:taxis_app_public/widgets/labels.dart';
-import 'package:taxis_app_public/widgets/logo.dart';
-import 'package:taxis_app_public/widgets/custom_input.dart';
+import 'package:taxis_app_public/Chat_app/widgets/labels.dart';
+import 'package:taxis_app_public/Chat_app/widgets/logo.dart';
+import 'package:taxis_app_public/Chat_app/widgets/custom_input.dart';
 
 
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +22,14 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
 
-                Logo( titulo: 'Messenger' ),
+                Logo( titulo: 'Registro' ),
 
                 _Form(),
 
                 Labels( 
-                  ruta: 'register',
-                  titulo: '¿No tienes cuenta?',
-                  subTitulo: 'Crea una ahora!',
+                  ruta: 'login',
+                  titulo: '¿Ya tienes una cuenta?',
+                  subTitulo: 'Ingresa ahora!',
                 ),
 
                 Text('Términos y condiciones de uso', style: TextStyle( fontWeight: FontWeight.w200 ),)
@@ -52,6 +52,7 @@ class _Form extends StatefulWidget {
 
 class __FormState extends State<_Form> {
 
+  final nameCtrl  = TextEditingController();
   final emailCtrl = TextEditingController();
   final passCtrl  = TextEditingController();
 
@@ -63,6 +64,13 @@ class __FormState extends State<_Form> {
        child: Column(
          children: <Widget>[
            
+           CustomInput(
+             icon: Icons.perm_identity,
+             placeholder: 'Nombre',
+             keyboardType: TextInputType.text, 
+             textController: nameCtrl,
+           ),
+
            CustomInput(
              icon: Icons.mail_outline,
              placeholder: 'Correo',

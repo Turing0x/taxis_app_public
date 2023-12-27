@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:taxis_app_public/models/usuario.dart';
+import 'package:taxis_app_public/Chat_app/models/usuario.dart';
 
 
 class UsuariosPage extends StatefulWidget {
