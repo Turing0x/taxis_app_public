@@ -11,7 +11,7 @@ class BtnSeguirUbicacion extends StatelessWidget {
 
   Widget _crearBoton(BuildContext context, MapaState state ) {
 
-    final mapaBloc = context.read<MapaBloc>();
+    final mapaBloc = context.watch<MapaBloc>();
 
     return Container(
       margin: EdgeInsets.only(bottom: 10 ),

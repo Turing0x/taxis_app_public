@@ -43,7 +43,7 @@ class _BuildMarcadorManual extends StatelessWidget {
               child: IconButton(
                 icon: Icon( Icons.arrow_back, color: Colors.black87 ), 
                 onPressed: () {
-                  context.read<BusquedaBloc>().add( OnDesactivarMarcadorManual() );
+                  context.watch<BusquedaBloc>().add( OnDesactivarMarcadorManual() );
                 }
               ),
             ),
@@ -90,9 +90,9 @@ class _BuildMarcadorManual extends StatelessWidget {
     calculandoAlerta(context);
 
     final trafficService = new TrafficService();
-    final mapaBloc = context.read<MapaBloc>();
+    final mapaBloc = context.watch<MapaBloc>();
     
-    final inicio  = context.read<MiUbicacionBloc>().state.ubicacion;
+    final inicio  = context.watch<MiUbicacionBloc>().state.ubicacion;
     final destino = mapaBloc.state.ubicacionCentral;
 
     // Obtener información del destino
@@ -114,7 +114,7 @@ class _BuildMarcadorManual extends StatelessWidget {
   //  mapaBloc.add( OnCrearRutaInicioDestino(rutaCoordenadas, distancia, duracion, nombreDestino) );
 
     Navigator.of(context).pop();
-    context.read<BusquedaBloc>().add( OnDesactivarMarcadorManual() );
+    context.watch<BusquedaBloc>().add( OnDesactivarMarcadorManual() );
   }
 
 }

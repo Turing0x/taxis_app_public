@@ -18,14 +18,14 @@ class _MapaPageState extends State<MapaPage> {
   @override
   void initState() {
     
-    context.read<MiUbicacionBloc>().iniciarSeguimiento();
+    context.watch<MiUbicacionBloc>().iniciarSeguimiento();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    context.read<MiUbicacionBloc>().cancelarSeguimiento();
+    context.watch<MiUbicacionBloc>().cancelarSeguimiento();
     super.dispose();
   }
 
