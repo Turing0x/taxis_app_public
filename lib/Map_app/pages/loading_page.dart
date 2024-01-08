@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:taxis_app_public/Map_app/helpers/helpers.dart';
-
-
-
 import 'package:taxis_app_public/Map_app/pages/acceso_gps_page.dart';
 import 'package:taxis_app_public/Map_app/pages/mapa_page.dart';
+
 
 
 

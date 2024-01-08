@@ -28,7 +28,7 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
     
     if (  state == AppLifecycleState.resumed ) {
       if ( await Permission.location.isGranted  ) {
-        Navigator.pushReplacementNamed(context, 'loading Map');
+        Navigator.pushReplacementNamed(context, 'loading map');
       }
     }
 
