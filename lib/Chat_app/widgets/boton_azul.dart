@@ -14,13 +14,16 @@ class BotonAzul extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ButtonStyle( 
+      style: const ButtonStyle( 
+        backgroundColor: MaterialStatePropertyAll(Colors.blue), 
         elevation: MaterialStatePropertyAll(2),
        
-         iconColor: const MaterialStatePropertyAll(Colors.blue),
+         iconColor: MaterialStatePropertyAll(Colors.blue),
         shape: MaterialStatePropertyAll(StadiumBorder()),),
        
-        onPressed: this.onPressed(),
+        onPressed: () {
+          onPressed;
+        },
         child: Container(
           width: double.infinity,
           height: 55,

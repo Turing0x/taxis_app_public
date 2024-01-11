@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taxis_app_public/Map_app/bloc/busqueda/busqueda_bloc.dart';
-import 'package:taxis_app_public/Map_app/bloc/mapa/mapa_bloc.dart';
-import 'package:taxis_app_public/Map_app/bloc/mi_ubicacion/mi_ubicacion_bloc.dart';
-import 'package:taxis_app_public/routes/routes.dart';
+import 'package:flutter_config/flutter_config.dart';
+
+import 'package:taxis_app_public/Map_app/blocs/gps/gps_bloc.dart';
+import 'package:taxis_app_public/Map_app/blocs/location/location_bloc.dart';
+import 'package:taxis_app_public/Map_app/blocs/map/map_bloc.dart';
+import 'package:taxis_app_public/Map_app/screens/loading_screen.dart';
 
 
 
-void main() => runApp(MyApp());
- 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
+
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider<GpsBloc>(create: (context) => GpsBloc()),
+    BlocProvider<LocationBloc>(create: (context) => LocationBloc()),
+    BlocProvider<MapBloc>(
+        create: (context) =>
+            MapBloc(locationBloc: BlocProvider.of<LocationBloc>(context))),
+  ], child: const MapsApp()));
+}
+
+class MapsApp extends StatelessWidget {
+  const MapsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: ( _ ) => MiUbicacionBloc() ),
-        BlocProvider(create: ( _ ) => MapaBloc() ),
-        BlocProvider(create: ( _ ) => BusquedaBloc() ),
-      ],
-      child: MaterialApp(
-        
-        debugShowCheckedModeBanner: false,
-        title: 'taxis_app_public App',
-        initialRoute: 'loading map',
-        routes: appRoutes,
-      ),
+    return  MaterialApp(
+      theme:ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
+      title: 'MapsApp',
+      home: const LoadingScreen(),
     );
   }
 }
