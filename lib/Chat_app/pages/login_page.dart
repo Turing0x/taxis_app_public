@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
 
-                Logo( titulo: 'Messenger' ),
+                Logo( titulo: 'Nombre App' ),
 
                 _Form(),
 
