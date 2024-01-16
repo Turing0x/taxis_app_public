@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:taxis_app_public/Chat_app/models/usuario.dart';
+import 'package:taxis_app_public/Chat_app/pages/chat_page.dart';
 
 
 class UsuariosPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mi Nombre', style: TextStyle(color: Colors.black87 ) ),
+        title: Text('Conductores', style: TextStyle(color: Colors.black87 ) ),
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -64,7 +65,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
   ListTile _usuarioListTile( Usuario usuario ) {
     return ListTile(
       onTap: () {
-        Navigator.pushNamed(context,'chat');
+            Navigator.push(context, MaterialPageRoute(builder:(context) => ChatPage(),));
         print('Entrar al chat page');
       },
         title: Text( usuario.nombre ),

@@ -6,6 +6,7 @@ import 'package:taxis_app_public/Chat_app/pages/loading_page.dart';
 import 'package:taxis_app_public/Chat_app/pages/login_page.dart';
 import 'package:taxis_app_public/Chat_app/pages/register_page.dart';
 import 'package:taxis_app_public/Chat_app/pages/usuarios_page.dart';
+import 'package:taxis_app_public/Core/pages/home_screend.dart';
 
 
 
@@ -17,6 +18,7 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'login'         : ( _ ) => LoginPage(),
   'register'      : ( _ ) => RegisterPage(),
   'loading'       : ( _ ) => LoadingPage(),
+  'home'          : ( _ ) => HomeScreen(),
 
 };
 
