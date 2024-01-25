@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:taxis_app_public/Core/config/theme/app_theme.dart';
-import 'package:taxis_app_public/Core/pages/home_screend.dart';
+import 'package:taxis_app_public/Core/pages/home_screen.dart';
 
 import 'package:taxis_app_public/Map_app/blocs/gps/gps_bloc.dart';
 import 'package:taxis_app_public/Map_app/blocs/location/location_bloc.dart';

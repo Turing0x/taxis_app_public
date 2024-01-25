@@ -30,6 +30,7 @@ class MapView extends StatelessWidget {
           onPointerMove: (pointerMoveEvent) =>
               mapBloc.add(OnStopFollowingUser()),
           child: GoogleMap(
+            
             initialCameraPosition: initialCameraPosition,
             myLocationEnabled: true,
             myLocationButtonEnabled: false,
