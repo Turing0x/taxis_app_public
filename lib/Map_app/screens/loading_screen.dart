@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:taxis_app_public/Map_app/screens/gps_access_screen.dart';
 
-import '../blocs/blocs.dart';
 import '../blocs/gps/gps_bloc.dart';
 import 'map_screen.dart';
 
 class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+  const LoadingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

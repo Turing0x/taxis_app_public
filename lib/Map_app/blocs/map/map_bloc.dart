@@ -9,7 +9,6 @@ import 'package:taxis_app_public/Map_app/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map_app/themes/uber.dart';
 
 
-import '../blocs.dart';
 
 part 'map_event.dart';
 part 'map_state.dart'; //state.
@@ -20,7 +19,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   GoogleMapController? _mapController;
   StreamSubscription<LocationState>? locationStateSubscription;
 
-  MapBloc({required this.locationBloc}) : super(const MapState()) {
+  MapBloc({required this.locationBloc}) : super( MapState()) {
     //Eventos
     on<OnMapInitializedEvent>(_onInitMap);
     on<OnStartFollowingUser>(_onStartFollowingUser);

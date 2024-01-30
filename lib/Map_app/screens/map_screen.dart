@@ -10,10 +10,9 @@ import 'package:taxis_app_public/Map_app/widgets/btn_follow_user.dart';
 import 'package:taxis_app_public/Map_app/widgets/btn_location.dart';
 import 'package:taxis_app_public/Map_app/widgets/btn_toogle_user_route.dart';
 
-import '../widgets/widgets.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+  const MapScreen({super.key});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -74,9 +73,9 @@ class _MapScreenState extends State<MapScreen> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Column(
+      floatingActionButton: const Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
+        children: [
           BtnToggleUser(),
           BtnFollowUser(),
           BtnCurrentLocation(),

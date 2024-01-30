@@ -19,13 +19,13 @@ class MapState extends Equatable {
   
    */
 
-  const MapState({
+   MapState({
     this.isMapInicialized = false,
     this.isFollowingUser = true,
     this.showMyRoute = true,
     Map<String, Polyline>? polylines,
   }) : polylines = polylines ??
-            const {}; //Si no se le pasa valor, por defecto asigna  {} a polylines
+        <String, Polyline>{}; //Si no se le pasa valor, por defecto asigna  {} a polylines
 
   MapState copyWith(
           {bool? isMapInicialized,
