@@ -25,7 +25,7 @@ class MapState extends Equatable {
     this.showMyRoute = true,
     Map<String, Polyline>? polylines,
   }) : polylines = polylines ??
-        Map<String, Polyline>(); //Si no se le pasa valor, por defecto asigna  {} a polylines
+        <String, Polyline>{}; //Si no se le pasa valor, por defecto asigna  {} a polylines
 
   MapState copyWith(
           {bool? isMapInicialized,

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxis_app_public/Map_app/blocs/gps/gps_bloc.dart';
 
-import '../blocs/blocs.dart';
 
 class GpsAcessScreen extends StatelessWidget {
-  const GpsAcessScreen({Key? key}) : super(key: key);
+  const GpsAcessScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +23,7 @@ class GpsAcessScreen extends StatelessWidget {
 }
 
 class _AccessButton extends StatelessWidget {
-  const _AccessButton({
-    Key? key,
-  }) : super(key: key);
+  const _AccessButton();
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +50,7 @@ class _AccessButton extends StatelessWidget {
 }
 
 class _EnableGpsMessage extends StatelessWidget {
-  const _EnableGpsMessage({
-    Key? key,
-  }) : super(key: key);
+  const _EnableGpsMessage();
 
   @override
   Widget build(BuildContext context) {

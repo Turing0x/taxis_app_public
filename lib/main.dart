@@ -7,7 +7,6 @@ import 'package:taxis_app_public/Core/pages/home_screen.dart';
 import 'package:taxis_app_public/Map_app/blocs/gps/gps_bloc.dart';
 import 'package:taxis_app_public/Map_app/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map_app/blocs/map/map_bloc.dart';
-import 'package:taxis_app_public/Map_app/screens/loading_screen.dart';
 
 
 

@@ -75,13 +75,13 @@ class MDrawer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       _MenuButtom(icon: const Icon(Icons.person),text: 'Perfil',function: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProfileScreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProfileScreen(),));
                       }),
                       _MenuButtom(icon: const Icon(Icons.wallet),text: 'Billetera',function: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => WalletScreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const WalletScreen(),));
                       }),
                       _MenuButtom(icon: const Icon(Icons.settings),text: 'Opciones',function: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen(),));
                       },)
                     ],
                   ),
@@ -95,10 +95,10 @@ class MDrawer extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context) =>  HistoryScreen(),));
                       }),
                       _MenuButtom(icon: const Icon(Icons.face_retouching_natural),text: 'Referidos',function: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ReferidoScreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ReferidoScreen(),));
                       }),
                       _MenuButtom(icon: const Icon(Icons.question_mark),text: 'Acerca De',function: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUsScreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  AboutUsScreen(),));
                       },)
                      
                     ],
@@ -118,7 +118,7 @@ class _MenuButtom extends StatelessWidget {
   final String text;
   final Function function;
   const _MenuButtom({
-    super.key, required this.icon, required this.text, required this.function,
+    required this.icon, required this.text, required this.function,
   });
 
   @override

@@ -6,10 +6,10 @@ class BotonAzul extends StatelessWidget {
   final Function onPressed;
 
   const BotonAzul({
-    Key? key, 
+    super.key, 
     required this.text, 
     required this.onPressed
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,11 @@ class BotonAzul extends StatelessWidget {
         onPressed: () {
           onPressed;
         },
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           height: 55,
           child: Center(
-            child: Text( this.text , style: TextStyle( color: Colors.white, fontSize: 17 )),
+            child: Text( text , style: const TextStyle( color: Colors.white, fontSize: 17 )),
           ),
         ),
     );

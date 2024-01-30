@@ -13,12 +13,12 @@ import 'package:taxis_app_public/Core/pages/home_screen.dart';
 final Map<String, Widget Function(BuildContext)> appRoutes = {
 
 
-  'usuarios'      : ( _ ) => UsuariosPage(),
-  'chat'          : ( _ ) => ChatPage(),
-  'login'         : ( _ ) => LoginPage(),
-  'register'      : ( _ ) => RegisterPage(),
-  'loading'       : ( _ ) => LoadingPage(),
-  'home'          : ( _ ) => HomeScreen(),
+  'usuarios'      : ( _ ) => const UsuariosPage(),
+  'chat'          : ( _ ) => const ChatPage(),
+  'login'         : ( _ ) => const LoginPage(),
+  'register'      : ( _ ) => const RegisterPage(),
+  'loading'       : ( _ ) => const LoadingPage(),
+  'home'          : ( _ ) => const HomeScreen(),
 
 };
 

@@ -17,11 +17,13 @@ class AboutUsScreen extends StatelessWidget {
     // Añade más preguntas y respuestas aquí
   ];
 
+  AboutUsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Preguntas Frecuentes'),
+        title: const Text('Preguntas Frecuentes'),
       ),
       body: ListView.builder(
         itemCount: faq.length,
@@ -30,7 +32,7 @@ class AboutUsScreen extends StatelessWidget {
             title: Text(faq[index]['pregunta']!),
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Text(faq[index]['respuesta']!),
               ),
             ],

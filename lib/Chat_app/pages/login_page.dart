@@ -8,31 +8,33 @@ import 'package:taxis_app_public/Chat_app/widgets/custom_input.dart';
 
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF2F2F2),
+      backgroundColor: const Color(0xffF2F2F2),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Container(
+          physics: const BouncingScrollPhysics(),
+          child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.9,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
 
-                Logo( titulo: 'Nombre App' ),
+                const Logo( titulo: 'Nombre App' ),
 
                 _Form(),
 
-                Labels( 
+                const Labels( 
                   ruta: 'register',
                   titulo: '¿No tienes cuenta?',
                   subTitulo: 'Crea una ahora!',
                 ),
 
-                Text('Términos y condiciones de uso', style: TextStyle( fontWeight: FontWeight.w200 ),)
+                const Text('Términos y condiciones de uso', style: TextStyle( fontWeight: FontWeight.w200 ),)
 
               ],
             ),
@@ -58,8 +60,8 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 40),
-      padding: EdgeInsets.symmetric( horizontal: 50 ),
+      margin: const EdgeInsets.only(top: 40),
+      padding: const EdgeInsets.symmetric( horizontal: 50 ),
        child: Column(
          children: <Widget>[
            
@@ -81,8 +83,7 @@ class __FormState extends State<_Form> {
            BotonAzul(
              text: 'Ingrese',
              onPressed: () {
-               print( emailCtrl.text );
-               print( passCtrl.text );
+              
              },
            )
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:taxis_app_public/Core/widgets/menu_drawer.dart';
 
 class MySlideTransition extends StatefulWidget {
+  const MySlideTransition({super.key});
+
   @override
   _MySlideTransitionState createState() => _MySlideTransitionState();
 }
@@ -15,8 +17,8 @@ class _MySlideTransitionState extends State<MySlideTransition>
   void initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
-    _animation = Tween<Offset>(begin: Offset(0, -1), end: Offset.zero)
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animation = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
         .animate(_animationController);
     _animationController.forward();
   }
@@ -25,7 +27,7 @@ class _MySlideTransitionState extends State<MySlideTransition>
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _animation,
-      child: MDrawer()
+      child: const MDrawer()
     );
   }
 

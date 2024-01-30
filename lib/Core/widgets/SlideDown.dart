@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SlideDown extends StatefulWidget {
   final Widget child;
 
-  SlideDown({required this.child});
+  const SlideDown({super.key, required this.child});
 
   @override
   _SlideDownState createState() => _SlideDownState();
@@ -22,7 +22,7 @@ class _SlideDownState extends State<SlideDown> with SingleTickerProviderStateMix
       duration: const Duration(milliseconds: 350),
     );
 
-    _offsetFloat = Tween<Offset>(begin: Offset.zero, end: Offset(0, 1)).animate(
+    _offsetFloat = Tween<Offset>(begin: Offset.zero, end: const Offset(0, 1)).animate(
       CurvedAnimation(
         parent: _controller,
         curve: Curves.linear,

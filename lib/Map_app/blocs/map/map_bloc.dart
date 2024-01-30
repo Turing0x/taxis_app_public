@@ -9,7 +9,6 @@ import 'package:taxis_app_public/Map_app/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map_app/themes/uber.dart';
 
 
-import '../blocs.dart';
 
 part 'map_event.dart';
 part 'map_state.dart'; //state.
