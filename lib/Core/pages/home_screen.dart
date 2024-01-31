@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:taxis_app_public/Core/widgets/menu_drawer.dart';
-import 'package:taxis_app_public/Map_app/screens/map_screen.dart';
+import 'package:taxis_app_public/Map/screens/loading_screen.dart';
 import 'package:top_modal_sheet/top_modal_sheet.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,19 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void showMyWidget() {
-  showModalBottomSheet(
-  context: context,
-  isScrollControlled: true,
-  builder: (context) {
-    return StatefulBuilder(
-      builder: (BuildContext context, StateSetter setState) {
-        return  const MDrawer();
-      },
-    );
-  },
-);
-}
+
     return Scaffold(
       
       drawer:const MDrawer() ,
@@ -44,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child:Stack(
           children: [
             Center(
-              child: MapScreen(),
+              child: LoadingScreen(),
              ),
           ],
         )),
