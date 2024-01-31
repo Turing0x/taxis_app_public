@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:taxis_app_public/Core/widgets/menu_drawer.dart';
+import 'package:taxis_app_public/Map_app/screens/loading_screen.dart';
 import 'package:taxis_app_public/Map_app/screens/map_screen.dart';
 import 'package:top_modal_sheet/top_modal_sheet.dart';
 class HomeScreen extends StatefulWidget {
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child:Stack(
           children: [
             Center(
-              child: MapScreen(),
+              child: LoadingScreen(),
              ),
           ],
         )),
