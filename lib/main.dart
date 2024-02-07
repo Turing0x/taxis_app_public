@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxis_app_public/Core/config/theme/app_theme.dart';
 import 'package:taxis_app_public/Core/config/utils/initial_route.dart';
+import 'package:taxis_app_public/Map/blocs/busqueda/busqueda_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/gps/gps_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<BusquedaBloc>(create: (context) => BusquedaBloc(),),
         BlocProvider<GpsBloc>(create: (context) => GpsBloc()),
         BlocProvider<LocationBloc>(create: (context) => LocationBloc()),
         BlocProvider<MapBloc>( create: (context) =>
@@ -28,7 +30,7 @@ Future<void> main() async {
       ], 
       child: ProviderScope(
         child: MapsApp(
-          rutaInicial: rutIni,
+          rutaInicial: 'loading',
         ),
       )
     )

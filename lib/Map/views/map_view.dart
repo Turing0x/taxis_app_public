@@ -17,6 +17,8 @@ class MapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mapBloc = BlocProvider.of<MapBloc>(context);
+    
+          mapBloc.add(OnUbicacionCambio(initialLocation)); 
 
     final CameraPosition initialCameraPosition =
         CameraPosition(target: initialLocation, zoom: 15);
@@ -31,13 +33,18 @@ class MapView extends StatelessWidget {
               mapBloc.add(OnStopFollowingUser()),
           child: GoogleMap(
             
+            mapType: MapType.normal,
+            onCameraMove: (position){
+            mapBloc.add(OnMovioMapa(centroMapa: position.target));
+            },
+            
             initialCameraPosition: initialCameraPosition,
             myLocationEnabled: true,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
-            polylines: polylines,
-            onMapCreated: (controller) =>
-                mapBloc.add(OnMapInitializedEvent(controller)),
+            polylines: mapBloc.state.polylines.values.toSet(),
+            
+            onMapCreated:  mapBloc.initMapa,
           ),
         ));
 

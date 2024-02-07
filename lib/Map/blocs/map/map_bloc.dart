@@ -18,14 +18,14 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   GoogleMapController? _mapController;
   StreamSubscription<LocationState>? locationStateSubscription;
+   Polyline _miRuta =  const Polyline(polylineId:
+   PolylineId('myRoute'),
+   color:Colors.black87,
+   width: 4 );
 
   MapBloc({required this.locationBloc}) : super( MapState()) {
-    //Eventos
-    on<OnMapInitializedEvent>(_onInitMap);
-    on<OnStartFollowingUser>(_onStartFollowingUser);
-    on<OnStopFollowingUser>((event, emit) => emit(state.copyWith(isFollowingUser: false)));
-    on<OnToggleUserRoute>((event, emit) => emit(state.copyWith(showMyRoute: !state.showMyRoute)));
-    on<UpdateUserPolylineEvent>(_onPolylineNewPoint);
+    //Eventos 
+   
 
     //Suscripcion al LocationBloc para escuchar los cambios del state
     locationStateSubscription = locationBloc.stream.listen((locationState) {
@@ -36,21 +36,24 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       if (state.isFollowingUser == false) return;
       if (locationState.lastKnowLocation == null) return;
       //En este punto ya contiene la ultima localizacion conocida y el seguimiento al usuario en true
-      moveCamera(locationState.lastKnowLocation!);
+      moverCamera(locationState.lastKnowLocation!);
     });
   }
 
-  void _onInitMap(OnMapInitializedEvent event, Emitter<MapState> emit) {
-    _mapController = event.controller;
-    _mapController!.setMapStyle(jsonEncode(uberMapTheme));
-    emit(state.copyWith(isMapInicialized: true));
+   void initMapa( GoogleMapController controller ) {
+    if ( !state.isMapInicialized ) {
+      _mapController = controller;
+      _mapController!.setMapStyle( jsonEncode(uberMapTheme) );
+
+      add( OnMapaListo(controller) );
+    }
   }
 
   void _onStartFollowingUser(
       OnStartFollowingUser event, Emitter<MapState> emit) {
     emit(state.copyWith(isFollowingUser: true));
     if (locationBloc.state.lastKnowLocation == null) return;
-    moveCamera(locationBloc.state.lastKnowLocation!);
+    moverCamera(locationBloc.state.lastKnowLocation!);
   }
 
   void _onPolylineNewPoint(
@@ -70,9 +73,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     emit(state.copyWith(polylines: currentPolylines));
   }
 
-  void moveCamera(LatLng newLocation) {
+  void moverCamera(LatLng newLocation) {
     final CameraUpdate cameraUpdate = CameraUpdate.newLatLng(newLocation);
-    _mapController?.animateCamera(cameraUpdate);
+    _mapController!.animateCamera(cameraUpdate);
   }
 
   @override
@@ -80,4 +83,58 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     locationStateSubscription?.cancel();
     return super.close();
   }
+@override
+  Stream<MapState>mapEventToState(MapEvent event)async*{
+
+  if(event is OnMapaListo){
+    
+    yield state.copyWith( isMapInicialized: true);
+  }else if(event is OnUbicacionCambio){
+yield* _onNuevaUbicacon(event);
+   
+  }else if(event is OnToggleUserRoute){
+    
+   yield* _onToggleUserRoute(event);
+  }else if(event is OnStartFollowingUser){
+   yield* _OnStartFollowingUser(event);
+  }else if( event is OnMovioMapa){
+    
+    yield  state.copyWith(ubicacionCentral: event.centroMapa);
+  }
+ 
+}
+
+  Stream<MapState> _OnStartFollowingUser(OnStartFollowingUser event)async*{
+    
+    yield state.copyWith(isFollowingUser: !state.isFollowingUser);
+  }
+ 
+
+Stream<MapState>_onNuevaUbicacon(OnUbicacionCambio event)async*{
+  if(state.isFollowingUser){
+    moverCamera(event.ubicacion);
+  }
+  List<LatLng> points=[..._miRuta.points,event.ubicacion];
+   _miRuta.copyWith(pointsParam: points);
+   
+   final currrentPolylines =state.polylines;
+   currrentPolylines['myRoute']=_miRuta;
+   
+   yield state.copyWith( polylines: currrentPolylines); 
+
+}
+Stream<MapState>_onToggleUserRoute(OnToggleUserRoute event)async*{
+if(!state.showMyRoute){
+      _miRuta =_miRuta.copyWith(colorParam: Colors.black87); 
+    }else {
+      _miRuta =_miRuta.copyWith(colorParam: Colors.transparent); 
+    }
+     final currrentPolylines =state.polylines;
+     currrentPolylines['myRoute']=_miRuta;
+     yield state.copyWith(
+       showMyRoute: !state.showMyRoute,
+       polylines: currrentPolylines
+       );
+}
+
 }

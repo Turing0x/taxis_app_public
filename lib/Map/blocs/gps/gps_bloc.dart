@@ -51,7 +51,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
             isGpsEnabled: isEnabled,
             isGpsPermissionGranted: state.isGpsPermissionGranted));
 
-        print("service status $isEnable");
+       
       });
     });
 
