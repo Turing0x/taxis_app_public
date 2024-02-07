@@ -6,6 +6,8 @@ import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
 import 'package:taxis_app_public/Map/services/traffic_services.dart';
 
+import '../../Core/controllers/rutes_controllers.dart';
+
 class MarcadorManual extends StatelessWidget {
   const MarcadorManual({super.key});
 
@@ -80,12 +82,14 @@ class _BuildMarcadorManual extends StatelessWidget {
   }
 
   Future<void> calcularDestino(BuildContext context) async {
-    final TrafficService trafficService = TrafficService();
+    final trafficService = RoutesControllers();
     final mapaBloc = BlocProvider.of<MapBloc>(context);
     final miUbicaconBloc = BlocProvider.of<LocationBloc>(context);
     final inicio = miUbicaconBloc.state.lastKnowLocation;
     final fin = mapaBloc.state.ubicacionCentral;
 
-    await trafficService.getCoordsInicioYDestino(inicio!, fin!);
+    final resp = await trafficService.makeRouteRequest();
+
+    print(resp[0].routes[0].polyline.encodedPolyline);
   }
 }
