@@ -28,7 +28,7 @@ class BtnCurrentLocation extends StatelessWidget {
                 return;
               }
 
-              mapBloc.moveCamera(userLocation);
+              mapBloc.moverCamera(userLocation);
             },
             icon: const Icon(
               Icons.my_location_outlined,

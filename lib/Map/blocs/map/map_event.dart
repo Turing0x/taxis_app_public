@@ -7,10 +7,10 @@ abstract class MapEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class OnMapInitializedEvent extends MapEvent {
+class OnMapaListo extends MapEvent {
   final GoogleMapController controller;
 
-  const OnMapInitializedEvent(this.controller);
+  const OnMapaListo(this.controller);
 }
 
 class OnStopFollowingUser extends MapEvent {}
@@ -22,5 +22,14 @@ class UpdateUserPolylineEvent extends MapEvent {
 
   const UpdateUserPolylineEvent(this.userLocations);
 }
+class OnUbicacionCambio extends MapEvent {
+  final LatLng ubicacion;
+
+  const OnUbicacionCambio(this.ubicacion);
+}
 
 class OnToggleUserRoute extends MapEvent {}
+class OnMovioMapa extends MapEvent{
+  final LatLng centroMapa;
+  const OnMovioMapa({required this.centroMapa});
+}

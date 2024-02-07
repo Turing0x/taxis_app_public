@@ -4,35 +4,31 @@ class MapState extends Equatable {
   final bool isMapInicialized;
   final bool isFollowingUser;
   final bool showMyRoute;
+ final LatLng? ubicacionCentral;
 
   // Polylines
   final Map<String, Polyline> polylines;
 
-  /* Ejemplo polyline:
-  
-    "mi_ruta: {
-      id:polylineID Google,
-      points: [[lat,lng],[123123,123123],[654,6545]],
-      width:3,
-      color: black87
-    }"
-  
-   */
 
    MapState({
+    this.ubicacionCentral,
     this.isMapInicialized = false,
-    this.isFollowingUser = true,
+    this.isFollowingUser = false,
     this.showMyRoute = true,
+    
     Map<String, Polyline>? polylines,
   }) : polylines = polylines ??
         <String, Polyline>{}; //Si no se le pasa valor, por defecto asigna  {} a polylines
 
   MapState copyWith(
-          {bool? isMapInicialized,
+          {
+          LatLng? ubicacionCentral,  
+          bool? isMapInicialized,
           bool? isFollowingUser,
           bool? showMyRoute,
           Map<String, Polyline>? polylines}) =>
       MapState(
+          ubicacionCentral:ubicacionCentral?? this.ubicacionCentral,
           isMapInicialized: isMapInicialized ?? this.isMapInicialized,
           isFollowingUser: isFollowingUser ?? this.isFollowingUser,
           polylines: polylines ?? this.polylines,
