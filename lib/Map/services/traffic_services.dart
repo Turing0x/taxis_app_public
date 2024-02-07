@@ -4,8 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TrafficService {
 
-  // Singleton
-
   static final TrafficService _instance = TrafficService._internal();
   factory TrafficService(){
     return _instance;
@@ -14,12 +12,6 @@ class TrafficService {
   final _dio =  Dio();
   final _baseUrl = 'https://api.mapbox.com/directions/v5';
   final _apiKey  = 'pk.eyJ1Ijoia2xlcml0aCIsImEiOiJja2UxbmcwYXEwMTI4MnF1bDNpOXVtczZ1In0.WU-RLHl90X1vck6KXv1JdQ';
-
- 
-
-
-
-
 
   Future getCoordsInicioYDestino( LatLng inicio, LatLng destino ) async {
 
@@ -34,10 +26,6 @@ class TrafficService {
       'language': 'es',
     });
 
-    
-
-
   }
-
 
 }

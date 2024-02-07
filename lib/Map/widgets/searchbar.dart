@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class CustomSearchBar extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         width: width,
         child: GestureDetector(
           onTap: () async {
@@ -35,19 +34,19 @@ class CustomSearchBar extends StatelessWidget {
             retornoBusqueda(resultado!, context);
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
             width: double.infinity,
-            child: Text('¿Dónde quieres ir?',
-                style: TextStyle(color: Colors.black87)),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(100),
-                boxShadow: <BoxShadow>[
+                boxShadow: const <BoxShadow>[
                   BoxShadow(
                       color: Colors.black12,
                       blurRadius: 5,
                       offset: Offset(0, 5))
                 ]),
+            child: const Text('¿Dónde quieres ir?',
+                style: TextStyle(color: Colors.black87)),
           ),
         ),
       ),

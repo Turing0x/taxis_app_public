@@ -10,7 +10,7 @@ Future<String> initialRoute() async {
 
   if(!await isPermissionGranted()) return 'location_permission';
 
-  return 'auth_page';
+  return 'maps_screen';
 }
 
 String _initialRouteByRole(String role) {

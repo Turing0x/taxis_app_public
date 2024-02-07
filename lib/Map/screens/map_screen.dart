@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
-import 'package:taxis_app_public/Map/search/search_destination.dart';
 import 'package:taxis_app_public/Map/views/map_view.dart';
 import 'package:taxis_app_public/Map/widgets/btn_follow_user.dart';
 import 'package:taxis_app_public/Map/widgets/btn_location.dart';
@@ -49,7 +48,7 @@ class _MapScreenState extends State<MapScreen> {
           BlocBuilder<LocationBloc, LocationState>(
             builder: (_, state) =>crearMapa(state),
           ),
-          MarcadorManual(),
+          const MarcadorManual(),
            const Column(
             children: [
               SizedBox(height: 20,),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taxis_app_public/Map/blocs/gps/gps_bloc.dart';
 
+import '../../shared/widgets.dart';
+import '../blocs/gps/gps_bloc.dart';
 
 class GpsAcessScreen extends StatelessWidget {
   const GpsAcessScreen({super.key});
@@ -9,6 +10,7 @@ class GpsAcessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: BlocBuilder<GpsBloc, GpsState>(
           builder: (context, state) {
@@ -27,23 +29,70 @@ class _AccessButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Es necesario el acceso al GPS"),
-        MaterialButton(
-            shape: const StadiumBorder(),
-            elevation: 0,
-            color: Colors.black,
-            splashColor: Colors.transparent,
-            onPressed: () {
+
+        Container(
+          height: size.height * 0.6,
+          margin: EdgeInsets.only(
+              left: size.width * .07,
+              right: size.width * .07),
+          child: Image.asset('assets/request_location.jpg'),
+        ),
+
+        dosisText('Permitir tu ubicación', fontWeight: FontWeight.bold, size: 30),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: dosisText('Necesitaremos tu ubicación para brindarte una mejor experiencia.',
+            maxLines: 3, textAlign: TextAlign.center),
+        ),
+
+        Container(
+          height: 50,
+          margin: const EdgeInsets.only(top: 20, bottom: 30),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            boxShadow: const [BoxShadow(
+              color: Colors.black26,
+              blurRadius: 2,
+              spreadRadius: 1
+            )],
+            gradient: const LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xFFFF4E56),
+                Color(0xFFFF684A),
+              ]
+            )
+          ),
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(color: Colors.transparent)
+            ),
+            onPressed: () async{
               final gpsBloc = BlocProvider.of<GpsBloc>(context);
-              gpsBloc.askGpsAccess();
+              final contex = Navigator.of(context);
+              
+              bool resp = await gpsBloc.askGpsAccess();
+
+              if(resp){
+                contex.pushNamedAndRemoveUntil(
+                  'auth_page', (Route<dynamic> route) => false);
+              }
             },
-            child: const Text(
-              "Solicitar Acceso",
-              style: TextStyle(color: Colors.white),
-            )),
+            child: dosisText('Claro, Estoy de Acuerdo', 
+              color: Colors.white, fontWeight: FontWeight.w600),
+          ),
+        ),
+
+        dosisText('Ahora no', 
+          fontWeight: FontWeight.bold,
+          color: const Color(0xFFFD7E86))
+        
       ],
     );
   }

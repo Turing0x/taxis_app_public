@@ -58,14 +58,14 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
     return isEnable;
   }
 
-  Future<void> askGpsAccess() async {
+  Future<bool> askGpsAccess() async {
     final status = await Permission.location.request();
 
     switch (status) {
       case PermissionStatus.granted:
         add(GpsAndPermissionEvent(
             isGpsEnabled: state.isGpsEnabled, isGpsPermissionGranted: true));
-        break;
+        return true;
       //Caso contrario es false
       case PermissionStatus.denied:
       case PermissionStatus.restricted:
@@ -77,6 +77,8 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       case PermissionStatus.provisional:
         // TODO: Handle this case.
     }
+
+    return false;
   }
 
   @override

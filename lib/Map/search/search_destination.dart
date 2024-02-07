@@ -22,7 +22,7 @@ return [
   @override
   Widget buildResults(BuildContext context) {
     // TODO: implement buildResults
-    return Text('Build Results');
+    return const Text('Build Results');
   }
 
   @override
@@ -31,8 +31,8 @@ return [
  return ListView(
   children: [
     ListTile(
-      leading: Icon(Icons.location_on),
-      title: Text('Ubicacion Manual'),
+      leading: const Icon(Icons.location_on),
+      title: const Text('Ubicacion Manual'),
       onTap: () {
         close(context,SearchResults(cancelo: false,manual: true));
       },

@@ -7,6 +7,8 @@ import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
 import 'package:taxis_app_public/Map/services/traffic_services.dart';
 
 class MarcadorManual extends StatelessWidget {
+  const MarcadorManual({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BusquedaBloc, BusquedaState>(
@@ -46,7 +48,7 @@ class _BuildMarcadorManual extends StatelessWidget {
 
             Center(
               child: Transform.translate(
-                  offset: Offset(0, -12),
+                  offset: const Offset(0, -12),
                   child: BounceInDown(
                       child: const Icon(Icons.location_on, size: 50))),
             ),
@@ -66,7 +68,9 @@ class _BuildMarcadorManual extends StatelessWidget {
                       calcularDestino(context);
                     },
                     child: const Text('Confirmar destino',
-                        style: TextStyle(color: Colors.white))),
+                        style: TextStyle(color: Colors.white)))
+                
+                
               ),
             ),
           ],
@@ -81,7 +85,7 @@ class _BuildMarcadorManual extends StatelessWidget {
     final miUbicaconBloc = BlocProvider.of<LocationBloc>(context);
     final inicio = miUbicaconBloc.state.lastKnowLocation;
     final fin = mapaBloc.state.ubicacionCentral;
-//TODO:Resolver este error
+
     await trafficService.getCoordsInicioYDestino(inicio!, fin!);
   }
 }

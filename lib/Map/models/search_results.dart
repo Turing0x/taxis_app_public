@@ -1,5 +1,4 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:meta/meta.dart';
 class SearchResults{
   final bool cancelo;
   final bool? manual;

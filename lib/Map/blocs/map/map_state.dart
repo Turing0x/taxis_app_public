@@ -1,40 +1,36 @@
 part of 'map_bloc.dart';
 
-class MapState extends Equatable {
+class MapState {
   final bool isMapInicialized;
   final bool isFollowingUser;
   final bool showMyRoute;
- final LatLng? ubicacionCentral;
+  final LatLng? ubicacionCentral;
 
   // Polylines
   final Map<String, Polyline> polylines;
 
-
-   MapState({
+  MapState({
     this.ubicacionCentral,
     this.isMapInicialized = false,
     this.isFollowingUser = false,
     this.showMyRoute = true,
-    
     Map<String, Polyline>? polylines,
-  }) : polylines = polylines ??
-        <String, Polyline>{}; //Si no se le pasa valor, por defecto asigna  {} a polylines
+  }) : polylines = polylines ?? <String, Polyline>{};
 
-  MapState copyWith(
-          {
-          LatLng? ubicacionCentral,  
-          bool? isMapInicialized,
-          bool? isFollowingUser,
-          bool? showMyRoute,
-          Map<String, Polyline>? polylines}) =>
-      MapState(
-          ubicacionCentral:ubicacionCentral?? this.ubicacionCentral,
-          isMapInicialized: isMapInicialized ?? this.isMapInicialized,
-          isFollowingUser: isFollowingUser ?? this.isFollowingUser,
-          polylines: polylines ?? this.polylines,
-          showMyRoute: showMyRoute ?? this.showMyRoute);
+  MapState copyWith({
+    LatLng? ubicacionCentral2,   
+    bool? isMapInicialized2,
+    bool? isFollowingUser2,
+    bool? showMyRoute,
+    Map<String, Polyline>? polylines2,
+  }) {
+    return MapState(
+      ubicacionCentral: ubicacionCentral2 ?? ubicacionCentral,
+      isMapInicialized: isMapInicialized2 ?? isMapInicialized,
+      isFollowingUser: isFollowingUser2 ?? isFollowingUser,
+      polylines: polylines2 ?? polylines,
+      showMyRoute: showMyRoute ?? this.showMyRoute,
+    );
+  }
 
-  @override
-  List<Object> get props =>
-      [isMapInicialized, isFollowingUser, polylines, showMyRoute];
 }

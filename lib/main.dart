@@ -30,7 +30,7 @@ Future<void> main() async {
       ], 
       child: ProviderScope(
         child: MapsApp(
-          rutaInicial: 'loading',
+          rutaInicial: rutIni,
         ),
       )
     )

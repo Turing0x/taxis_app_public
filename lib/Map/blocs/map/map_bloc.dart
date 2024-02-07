@@ -49,29 +49,29 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     }
   }
 
-  void _onStartFollowingUser(
-      OnStartFollowingUser event, Emitter<MapState> emit) {
-    emit(state.copyWith(isFollowingUser: true));
-    if (locationBloc.state.lastKnowLocation == null) return;
-    moverCamera(locationBloc.state.lastKnowLocation!);
-  }
+  // void _onStartFollowingUser(
+  //     OnStartFollowingUser event, Emitter<MapState> emit) {
+  //   emit(state.copyWith(isFollowingUser: true));
+  //   if (locationBloc.state.lastKnowLocation == null) return;
+  //   moverCamera(locationBloc.state.lastKnowLocation!);
+  // }
 
-  void _onPolylineNewPoint(
-      UpdateUserPolylineEvent event, Emitter<MapState> emit) {
-    final myRoute = Polyline(
-        polylineId: const PolylineId('myRoute'),
-        color: Colors.black,
-        width: 5,
-        startCap: Cap.roundCap,
-        endCap: Cap.roundCap,
-        points: event.userLocations);
+  // void _onPolylineNewPoint(
+  //     UpdateUserPolylineEvent event, Emitter<MapState> emit) {
+  //   final myRoute = Polyline(
+  //       polylineId: const PolylineId('myRoute'),
+  //       color: Colors.black,
+  //       width: 5,
+  //       startCap: Cap.roundCap,
+  //       endCap: Cap.roundCap,
+  //       points: event.userLocations);
 
-    final Map<String, Polyline> currentPolylines =
-        Map.from(state.polylines); //crea una copia de estado actual.
-    currentPolylines['myRoute'] = myRoute;
+  //   final Map<String, Polyline> currentPolylines =
+  //       Map.from(state.polylines); //crea una copia de estado actual.
+  //   currentPolylines['myRoute'] = myRoute;
 
-    emit(state.copyWith(polylines: currentPolylines));
-  }
+  //   emit(state.copyWith(polylines: currentPolylines));
+  // }
 
   void moverCamera(LatLng newLocation) {
     final CameraUpdate cameraUpdate = CameraUpdate.newLatLng(newLocation);
@@ -84,11 +84,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     return super.close();
   }
 @override
-  Stream<MapState>mapEventToState(MapEvent event)async*{
+  Stream<MapState>mapEventToState(MapEvent event) async*{
 
   if(event is OnMapaListo){
     
-    yield state.copyWith( isMapInicialized: true);
+    yield state.copyWith( isMapInicialized2: true);
   }else if(event is OnUbicacionCambio){
 yield* _onNuevaUbicacon(event);
    
@@ -98,15 +98,14 @@ yield* _onNuevaUbicacon(event);
   }else if(event is OnStartFollowingUser){
    yield* _OnStartFollowingUser(event);
   }else if( event is OnMovioMapa){
-    
-    yield  state.copyWith(ubicacionCentral: event.centroMapa);
+    yield state.copyWith(ubicacionCentral2: event.centroMapa);
   }
  
 }
 
   Stream<MapState> _OnStartFollowingUser(OnStartFollowingUser event)async*{
     
-    yield state.copyWith(isFollowingUser: !state.isFollowingUser);
+    yield state.copyWith(isFollowingUser2: !state.isFollowingUser);
   }
  
 
@@ -120,7 +119,7 @@ Stream<MapState>_onNuevaUbicacon(OnUbicacionCambio event)async*{
    final currrentPolylines =state.polylines;
    currrentPolylines['myRoute']=_miRuta;
    
-   yield state.copyWith( polylines: currrentPolylines); 
+   yield state.copyWith( polylines2: currrentPolylines); 
 
 }
 Stream<MapState>_onToggleUserRoute(OnToggleUserRoute event)async*{
@@ -133,7 +132,7 @@ if(!state.showMyRoute){
      currrentPolylines['myRoute']=_miRuta;
      yield state.copyWith(
        showMyRoute: !state.showMyRoute,
-       polylines: currrentPolylines
+       polylines2: currrentPolylines
        );
 }
 
