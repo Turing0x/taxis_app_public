@@ -14,7 +14,15 @@ class OnMapaListo extends MapEvent {
 }
 
 class OnStopFollowingUser extends MapEvent {}
+class OnCrearRutaInicioDestino extends MapEvent {
+  final List<LatLng> coords;
+  final double distancia;
+  final String duration;
 
+  OnCrearRutaInicioDestino({required this.coords, required this.distancia, required this.duration});
+
+  
+}
 class OnStartFollowingUser extends MapEvent {}
 
 class UpdateUserPolylineEvent extends MapEvent {

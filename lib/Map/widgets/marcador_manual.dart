@@ -1,12 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxis_app_public/Map/blocs/busqueda/busqueda_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
+import 'package:taxis_app_public/Map/helpers/calculando_alerta.dart';
 import 'package:taxis_app_public/Map/services/traffic_services.dart';
 
-import '../../Core/controllers/rutes_controllers.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class MarcadorManual extends StatelessWidget {
   const MarcadorManual({super.key});
@@ -82,14 +84,52 @@ class _BuildMarcadorManual extends StatelessWidget {
   }
 
   Future<void> calcularDestino(BuildContext context) async {
-    final trafficService = RoutesControllers();
-    final mapaBloc = BlocProvider.of<MapBloc>(context);
-    final miUbicaconBloc = BlocProvider.of<LocationBloc>(context);
-    final inicio = miUbicaconBloc.state.lastKnowLocation;
-    final fin = mapaBloc.state.ubicacionCentral;
+  calculandoAlerta(context);
+  PolylinePoints polylinePoints = PolylinePoints();
+  final trafficService = TrafficService();
+  final busquedaBloc = BlocProvider.of<BusquedaBloc>(context);
+  final mapaBloc = BlocProvider.of<MapBloc>(context);
+  final miUbicaconBloc = BlocProvider.of<LocationBloc>(context);
+  final inicio = miUbicaconBloc.state.lastKnowLocation;
+  final fin = mapaBloc.state.ubicacionCentral;
+  //TODO:AGREGAR EN CUANTO TIEMPO DESEA SALIR
+  final resp = await trafficService.getCoordsInicioYDestino(inicio!, fin!, Duration(minutes:  1));
+  final geometry = resp.routes[0].polyline;
+  final duration = resp.routes[0].duration;
+  final distance = resp.routes[0].distanceMeters;
+    
+  final points = polylinePoints.decodePolyline(geometry.encodedPolyline);
+  final List<LatLng> coordsLists = points.map((point) =>
+  LatLng(point.latitude, point.longitude) ).toList();
 
-    final resp = await trafficService.makeRouteRequest();
+mapaBloc.add(OnCrearRutaInicioDestino(coords: coordsLists, distancia: distance.toDouble() , duration: duration));
+ Navigator.pop(context);
+busquedaBloc.add(OnDesactivarMarcadorManual()); 
+  //String encodedPolyline = resp.routes[0].geometry;
 
-    print(resp[0].routes[0].polyline.encodedPolyline);
-  }
+  // ignore: use_build_context_synchronously
+  // showDialog(
+  //   context: context,
+  //   builder: (BuildContext context) {
+  //     return AlertDialog(
+  //       title: Text('Detalles del Destino'),
+  //       content: SingleChildScrollView(
+  //         child: ListBody(
+  //           children: <Widget>[
+  //             Text('La ruta calculada es: $encodedPolyline'),
+  //           ],
+  //         ),
+  //       ),
+  //       actions: <Widget>[
+  //         TextButton(
+  //           child: Text('OK'),
+  //           onPressed: () {
+  //             Navigator.of(context).pop();
+  //           },
+  //         ),
+  //       ],
+  //     );
+  //   },
+  // );
+}
 }
