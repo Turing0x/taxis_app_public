@@ -28,9 +28,9 @@ Future<void> main() async {
           MapBloc(locationBloc: 
             BlocProvider.of<LocationBloc>(context))),
       ], 
-      child: ProviderScope(
+      child: const ProviderScope(
         child: MapsApp(
-          rutaInicial: rutIni,
+          rutaInicial: 'home',
         ),
       )
     )

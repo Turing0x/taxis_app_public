@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
 
-
 class MapView extends StatelessWidget {
   final LatLng initialLocation;
   final Set<Polyline> polylines;
@@ -17,8 +16,8 @@ class MapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mapBloc = BlocProvider.of<MapBloc>(context);
-    
-          mapBloc.add(OnUbicacionCambio(initialLocation)); 
+
+    mapBloc.add(OnUbicacionCambio(initialLocation));
 
     final CameraPosition initialCameraPosition =
         CameraPosition(target: initialLocation, zoom: 15);
@@ -31,25 +30,25 @@ class MapView extends StatelessWidget {
         child: Listener(
           onPointerMove: (pointerMoveEvent) =>
               mapBloc.add(OnStopFollowingUser()),
-          child: GoogleMap(
-            
-            mapType: MapType.normal,
-            onCameraMove: (position){
-            mapBloc.add(OnMovioMapa(centroMapa: position.target));
+          child: BlocBuilder<MapBloc, MapState>(
+            builder: (context, state) {
+              return GoogleMap(
+                mapType: MapType.normal,
+                onCameraMove: (position) {
+                  mapBloc.add(OnMovioMapa(centroMapa: position.target));
+                },
+                initialCameraPosition: initialCameraPosition,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                polylines: mapBloc.state.polylines.values.toSet(),
+                onMapCreated: mapBloc.initMapa,
+              );
             },
-            
-            initialCameraPosition: initialCameraPosition,
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            polylines: mapBloc.state.polylines.values.toSet(),
-            
-            onMapCreated:  mapBloc.initMapa,
           ),
         ));
 
     // TODO: Markers
     //TODO: Polylines
-    //TODO: Cuando se mueve el mapa mover la camara com quiero
   }
 }

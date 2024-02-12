@@ -18,9 +18,14 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   GoogleMapController? _mapController;
   StreamSubscription<LocationState>? locationStateSubscription;
-   Polyline _miRuta =  const Polyline(polylineId:
-   PolylineId('myRoute'),
+  
+   Polyline _miRuta =  const Polyline(
+    polylineId: PolylineId('myRoute'),
    color:Colors.black87,
+   width: 4 );
+   Polyline _miRutaDestino =  const Polyline(
+    polylineId: PolylineId('myRouteD'),
+   color:Colors.blueAccent,
    width: 4 );
 
   MapBloc({required this.locationBloc}) : super( MapState()) {
@@ -99,16 +104,16 @@ yield* _onNuevaUbicacon(event);
    yield* _OnStartFollowingUser(event);
   }else if( event is OnMovioMapa){
     yield state.copyWith(ubicacionCentral2: event.centroMapa);
+  } else if(event is OnCrearRutaInicioDestino){
+    yield* _OnCrearRutaInicioDestino(event);
   }
  
 }
 
-  Stream<MapState> _OnStartFollowingUser(OnStartFollowingUser event)async*{
+Stream<MapState> _OnStartFollowingUser(OnStartFollowingUser event)async*{
     
     yield state.copyWith(isFollowingUser2: !state.isFollowingUser);
   }
- 
-
 Stream<MapState>_onNuevaUbicacon(OnUbicacionCambio event)async*{
   if(state.isFollowingUser){
     moverCamera(event.ubicacion);
@@ -135,5 +140,17 @@ if(!state.showMyRoute){
        polylines2: currrentPolylines
        );
 }
+Stream<MapState>_OnCrearRutaInicioDestino( OnCrearRutaInicioDestino event)async*{
 
+_miRutaDestino = _miRutaDestino.copyWith(pointsParam: event.coords);
+final currentPolylines =state.polylines;
+currentPolylines['myRouteD']=_miRutaDestino;
+
+
+
+  yield state.copyWith(
+    polylines2: currentPolylines
+    //TODO:Marcadores
+  ); 
+}
 }
