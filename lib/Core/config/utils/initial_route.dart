@@ -10,14 +10,14 @@ Future<String> initialRoute() async {
 
   if(!await isPermissionGranted()) return 'location_permission';
 
-  return 'maps_screen';
+  return 'auth_page';
 }
 
 String _initialRouteByRole(String role) {
   
   Map<String, String> mainPages = {
-    'main_driver': 'main_storage_page',
-    'main_client': 'main_commercial_page',
+    'driver': 'home',
+    'client': 'main_commercial_page',
   };
 
   return mainPages[role]!;

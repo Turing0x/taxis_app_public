@@ -115,6 +115,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             try {
               
               btnManagerM.state = true;
+              FocusScope.of(context).unfocus();
       
               final userCrtl = UserControllers();
       
@@ -140,9 +141,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 return;
               }
       
-              // await userCrtl.saveUser(fullnameTxt, emailTxt, usernameTxt, passwordTxt);
+              await userCrtl.save(fullnameTxt, emailTxt, usernameTxt, passwordTxt);
 
-              FocusScope.of(context).unfocus();
               btnManagerM.state = false;
       
             } catch (e) { btnManagerM.state = false; }

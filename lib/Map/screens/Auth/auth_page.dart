@@ -123,7 +123,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
         
               userCrtl.login(txtusername, txtpassword).then((value) {
                 if(value){
-                  Navigator.pushReplacementNamed(context, 'main_driver_page');
+                  Navigator.pushReplacementNamed(context, 'maps_screen');
                 }
               });
               btnManagerM.state = false;

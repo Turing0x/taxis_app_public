@@ -2,7 +2,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
-        android:label="taxis_app_public"
+        android:label="TaxiPublicApp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD02_rRNBExD1cmU8I684O-Kt5UGsN3Hs4"/>
