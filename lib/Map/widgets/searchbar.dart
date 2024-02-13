@@ -3,6 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/busqueda/busqueda_bloc.dart';
+import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/models/search_results.dart';
 import 'package:taxis_app_public/Map/search/search_destination.dart';
 
@@ -30,7 +31,9 @@ class CustomSearchBar extends StatelessWidget {
         child: GestureDetector(
           onTap: () async {
             final resultado = await showSearch(
-                context: context, delegate: SearchDestination());
+                context: context, delegate: SearchDestination( 
+            BlocProvider.of<LocationBloc>(context).state.lastKnowLocation!
+                ));
             retornoBusqueda(resultado!, context);
           },
           child: Container(

@@ -1,9 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:taxis_app_public/Map/models/places_results.dart';
 import 'package:taxis_app_public/Map/models/search_results.dart';
+import 'package:taxis_app_public/Map/services/traffic_services.dart';
 
 class SearchDestination extends SearchDelegate<SearchResults>{
   @override
   final String searchFieldLabel ='Buscar';
+  final TrafficService  trafficService;
+  final LatLng proximidad;
+
+  SearchDestination(this.proximidad):trafficService =TrafficService();
   
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -21,14 +29,15 @@ return [
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return const Text('Build Results');
+    trafficService.getPlacesPorQuery(query.trim(), proximidad);
+    return _construirResultadoSugerencia();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
- return ListView(
+    if(query.length==0){
+return ListView(
   children: [
     ListTile(
       leading: const Icon(Icons.location_on),
@@ -39,5 +48,48 @@ return [
     )
   ],
  );
+    }else{
+      return _construirResultadoSugerencia();
+    }
+ 
+  }
+  Widget _construirResultadoSugerencia(){
+    if(query ==''){
+     return Container();
+    };
+//(query.trim(), proximidad)
+trafficService.getSugerenciasPorQuery(query.trim(), proximidad);
+return StreamBuilder(
+  stream:trafficService.sugerenciasStream ,
+  builder: (context, AsyncSnapshot  snapshot) {
+    if(!snapshot.hasData){
+      return const Center(child: CircularProgressIndicator());
+    }else {
+      final findResponse = snapshot.data as FindPlacesRespose;
+      final lugares=findResponse.candidates;
+      if(lugares.isEmpty){
+        return ListTile(
+          title: Text('No hay Resultadoos con $query'),
+        );
+      }
+      return ListView.separated(
+       
+      separatorBuilder: (_, index) =>const Divider(),
+       itemCount: lugares.length,
+      itemBuilder: (context, index) {
+        final lugar =lugares[index];
+        return ListTile(
+          leading: const Icon(Icons.place),
+          title: Text(lugar.formattedAddress),
+          onTap: () {
+            if (kDebugMode) {
+              print(lugar);
+            }
+          },
+        );
+      },);
+    }
+  },) ; 
+
   }
 }
