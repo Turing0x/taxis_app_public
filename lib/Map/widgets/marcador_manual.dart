@@ -52,9 +52,7 @@ class _BuildMarcadorManual extends StatelessWidget {
 
             Center(
               child: Transform.translate(
-                  offset: const Offset(0, -12),
-                  child: BounceInDown(
-                      child: const Icon(Icons.location_on, size: 50))),
+                  offset: const Offset(0, -12), child: BounceInDown(child: const Icon(Icons.location_on, size: 50))),
             ),
 
             // Boton de confirmar destino
@@ -62,20 +60,16 @@ class _BuildMarcadorManual extends StatelessWidget {
               bottom: 70,
               left: 40,
               child: FadeIn(
-                child: MaterialButton(
-                    minWidth: width - 120,
-                    color: Colors.black,
-                    shape: const StadiumBorder(),
-                    elevation: 0,
-                    splashColor: Colors.transparent,
-                    onPressed: () {
-                      calcularDestino(context);
-                    },
-                    child: const Text('Confirmar destino',
-                        style: TextStyle(color: Colors.white)))
-                
-                
-              ),
+                  child: MaterialButton(
+                      minWidth: width - 120,
+                      color: Colors.black,
+                      shape: const StadiumBorder(),
+                      elevation: 0,
+                      splashColor: Colors.transparent,
+                      onPressed: () {
+                        calcularDestino(context);
+                      },
+                      child: const Text('Confirmar destino', style: TextStyle(color: Colors.white)))),
             ),
           ],
         );
@@ -84,52 +78,51 @@ class _BuildMarcadorManual extends StatelessWidget {
   }
 
   Future<void> calcularDestino(BuildContext context) async {
-  calculandoAlerta(context);
-  PolylinePoints polylinePoints = PolylinePoints();
-  final trafficService = TrafficService();
-  final busquedaBloc = BlocProvider.of<BusquedaBloc>(context);
-  final mapaBloc = BlocProvider.of<MapBloc>(context);
-  final miUbicaconBloc = BlocProvider.of<LocationBloc>(context);
-  final inicio = miUbicaconBloc.state.lastKnowLocation;
-  final fin = mapaBloc.state.ubicacionCentral;
-  //TODO:AGREGAR EN CUANTO TIEMPO DESEA SALIR
-  final resp = await trafficService.getCoordsInicioYDestino(inicio!, fin!, Duration(minutes:  1));
-  final geometry = resp.routes[0].polyline;
-  final duration = resp.routes[0].duration;
-  final distance = resp.routes[0].distanceMeters;
-    
-  final points = polylinePoints.decodePolyline(geometry.encodedPolyline);
-  final List<LatLng> coordsLists = points.map((point) =>
-  LatLng(point.latitude, point.longitude) ).toList();
+    calculandoAlerta(context);
+    PolylinePoints polylinePoints = PolylinePoints();
+    final trafficService = TrafficService();
+    final busquedaBloc = BlocProvider.of<BusquedaBloc>(context);
+    final mapaBloc = BlocProvider.of<MapBloc>(context);
+    final miUbicaconBloc = BlocProvider.of<LocationBloc>(context);
+    final inicio = miUbicaconBloc.state.lastKnowLocation;
+    final fin = mapaBloc.state.ubicacionCentral;
+    //TODO:AGREGAR EN CUANTO TIEMPO DESEA SALIR
+    final resp = await trafficService.getCoordsInicioYDestino(inicio!, fin!, const Duration(minutes: 1));
+    final geometry = resp.routes[0].polyline;
+    final duration = resp.routes[0].duration;
+    final distance = resp.routes[0].distanceMeters;
 
-mapaBloc.add(OnCrearRutaInicioDestino(coords: coordsLists, distancia: distance.toDouble() , duration: duration));
- Navigator.pop(context);
-busquedaBloc.add(OnDesactivarMarcadorManual()); 
-  //String encodedPolyline = resp.routes[0].geometry;
+    final points = polylinePoints.decodePolyline(geometry.encodedPolyline);
+    final List<LatLng> coordsLists = points.map((point) => LatLng(point.latitude, point.longitude)).toList();
 
-  // ignore: use_build_context_synchronously
-  // showDialog(
-  //   context: context,
-  //   builder: (BuildContext context) {
-  //     return AlertDialog(
-  //       title: Text('Detalles del Destino'),
-  //       content: SingleChildScrollView(
-  //         child: ListBody(
-  //           children: <Widget>[
-  //             Text('La ruta calculada es: $encodedPolyline'),
-  //           ],
-  //         ),
-  //       ),
-  //       actions: <Widget>[
-  //         TextButton(
-  //           child: Text('OK'),
-  //           onPressed: () {
-  //             Navigator.of(context).pop();
-  //           },
-  //         ),
-  //       ],
-  //     );
-  //   },
-  // );
-}
+    mapaBloc.add(OnCrearRutaInicioDestino(coords: coordsLists, distancia: distance.toDouble(), duration: duration));
+    Navigator.pop(context);
+    busquedaBloc.add(OnDesactivarMarcadorManual());
+    //String encodedPolyline = resp.routes[0].geometry;
+
+    // ignore: use_build_context_synchronously
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return AlertDialog(
+    //       title: Text('Detalles del Destino'),
+    //       content: SingleChildScrollView(
+    //         child: ListBody(
+    //           children: <Widget>[
+    //             Text('La ruta calculada es: $encodedPolyline'),
+    //           ],
+    //         ),
+    //       ),
+    //       actions: <Widget>[
+    //         TextButton(
+    //           child: Text('OK'),
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //           },
+    //         ),
+    //       ],
+    //     );
+    //   },
+    // );
+  }
 }

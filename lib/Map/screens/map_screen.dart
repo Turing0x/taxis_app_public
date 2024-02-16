@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
 import 'package:taxis_app_public/Map/views/map_view.dart';
@@ -11,7 +10,6 @@ import 'package:taxis_app_public/Map/widgets/btn_location.dart';
 import 'package:taxis_app_public/Map/widgets/btn_toogle_user_route.dart';
 import 'package:taxis_app_public/Map/widgets/marcador_manual.dart';
 import 'package:taxis_app_public/Map/widgets/searchbar.dart';
-
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -46,12 +44,14 @@ class _MapScreenState extends State<MapScreen> {
       body: Stack(
         children: [
           BlocBuilder<LocationBloc, LocationState>(
-            builder: (_, state) =>crearMapa(state),
+            builder: (_, state) => crearMapa(state),
           ),
           const MarcadorManual(),
-           const Column(
+          const Column(
             children: [
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               CustomSearchBar(),
             ],
           )
@@ -69,29 +69,26 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget crearMapa(LocationState state){
+  Widget crearMapa(LocationState state) {
     {
-          if (state.lastKnowLocation == null) {
-            return const Center(child: Text("Espere por favor..."));
+      if (state.lastKnowLocation == null) {
+        return const Center(child: Text("Espere por favor..."));
+      }
+
+      return BlocBuilder<MapBloc, MapState>(
+        builder: (context, mapState) {
+          Map<String, Polyline> polylines = Map.from(mapState.polylines); //copia de las polylines
+
+          if (mapState.showMyRoute == false) {
+            polylines.removeWhere((key, value) => key == "myRoute");
           }
-          
-            
-          return BlocBuilder<MapBloc, MapState>(
-            builder: (context, mapState) {
-              
-              Map<String, Polyline> polylines =
-                  Map.from(mapState.polylines); //copia de las polylines
 
-              if (mapState.showMyRoute == false) {
-                polylines.removeWhere((key, value) => key == "myRoute");
-              }
-
-              return MapView(
-                initialLocation: state.lastKnowLocation!,
-                polylines: mapState.polylines.values.toSet(),
-              );
-            },
+          return MapView(
+            initialLocation: state.lastKnowLocation!,
+            polylines: mapState.polylines.values.toSet(),
           );
-        }
+        },
+      );
+    }
   }
 }

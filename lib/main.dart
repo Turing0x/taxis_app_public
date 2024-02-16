@@ -18,28 +18,26 @@ Future<void> main() async {
 
   final rutIni = await initialRoute();
 
-  runApp(
-    MultiBlocProvider(
+  runApp(MultiBlocProvider(
       providers: [
-        BlocProvider<BusquedaBloc>(create: (context) => BusquedaBloc(),),
+        BlocProvider<BusquedaBloc>(
+          create: (context) => BusquedaBloc(),
+        ),
         BlocProvider<GpsBloc>(create: (context) => GpsBloc()),
         BlocProvider<LocationBloc>(create: (context) => LocationBloc()),
-        BlocProvider<MapBloc>( create: (context) =>
-          MapBloc(locationBloc: 
-            BlocProvider.of<LocationBloc>(context))),
-      ], 
+        BlocProvider<MapBloc>(create: (context) => MapBloc(locationBloc: BlocProvider.of<LocationBloc>(context))),
+      ],
       child: ProviderScope(
         child: MapsApp(
           rutaInicial: rutIni,
         ),
-      )
-    )
-  );
+      )));
 }
 
 class MapsApp extends StatelessWidget {
-  const MapsApp({super.key,
-    required this.rutaInicial, 
+  const MapsApp({
+    super.key,
+    required this.rutaInicial,
   });
 
   final String rutaInicial;
@@ -47,7 +45,7 @@ class MapsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: AppTheme( isDarkmode: false ).getTheme(),
+      theme: AppTheme(isDarkmode: false).getTheme(),
       debugShowCheckedModeBanner: false,
       initialRoute: rutaInicial,
       routes: appRoutes,

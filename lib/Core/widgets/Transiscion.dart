@@ -8,27 +8,21 @@ class MySlideTransition extends StatefulWidget {
   _MySlideTransitionState createState() => _MySlideTransitionState();
 }
 
-class _MySlideTransitionState extends State<MySlideTransition>
-    with SingleTickerProviderStateMixin {
+class _MySlideTransitionState extends State<MySlideTransition> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _animation;
 
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    _animation = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
-        .animate(_animationController);
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animation = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero).animate(_animationController);
     _animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: _animation,
-      child: const MDrawer()
-    );
+    return SlideTransition(position: _animation, child: const MDrawer());
   }
 
   @override

@@ -4,7 +4,6 @@ import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
 import 'package:taxis_app_public/Map/ui/custom_snackbar.dart';
 
-
 class BtnCurrentLocation extends StatelessWidget {
   const BtnCurrentLocation({super.key});
 

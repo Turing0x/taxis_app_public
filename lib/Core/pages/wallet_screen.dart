@@ -27,8 +27,6 @@ class WalletScreen extends StatelessWidget {
                       '0.00 CUP',
                       style: TextStyle(fontSize: 36, color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-
-                   
                     TextButton(
                       onPressed: () {
                         // Acción para ver el historial
@@ -43,7 +41,7 @@ class WalletScreen extends StatelessWidget {
               ),
             ),
           ),
-           SizedBox(height: MediaQuery.of(context).size.height*0.4),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.4),
           ElevatedButton(
             onPressed: () {
               // Acción para Transferir Saldo

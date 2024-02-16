@@ -7,7 +7,6 @@ abstract class GpsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
 //Este es el evento que va a modificar el estado
 class GpsAndPermissionEvent extends GpsEvent {
   final bool isGpsEnabled;

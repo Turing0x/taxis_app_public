@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
 
-
 class BtnFollowUser extends StatelessWidget {
   const BtnFollowUser({super.key});
 
@@ -19,9 +18,7 @@ class BtnFollowUser extends StatelessWidget {
           builder: (context, state) {
             return IconButton(
               icon: Icon(
-                state.isFollowingUser
-                    ? Icons.directions_run_rounded
-                    : Icons.hail_rounded,
+                state.isFollowingUser ? Icons.directions_run_rounded : Icons.hail_rounded,
                 color: Colors.black,
               ),
               onPressed: () {

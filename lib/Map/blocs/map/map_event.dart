@@ -14,15 +14,15 @@ class OnMapaListo extends MapEvent {
 }
 
 class OnStopFollowingUser extends MapEvent {}
+
 class OnCrearRutaInicioDestino extends MapEvent {
   final List<LatLng> coords;
   final double distancia;
   final String duration;
 
-  OnCrearRutaInicioDestino({required this.coords, required this.distancia, required this.duration});
-
-  
+  const OnCrearRutaInicioDestino({required this.coords, required this.distancia, required this.duration});
 }
+
 class OnStartFollowingUser extends MapEvent {}
 
 class UpdateUserPolylineEvent extends MapEvent {
@@ -30,6 +30,7 @@ class UpdateUserPolylineEvent extends MapEvent {
 
   const UpdateUserPolylineEvent(this.userLocations);
 }
+
 class OnUbicacionCambio extends MapEvent {
   final LatLng ubicacion;
 
@@ -37,7 +38,8 @@ class OnUbicacionCambio extends MapEvent {
 }
 
 class OnToggleUserRoute extends MapEvent {}
-class OnMovioMapa extends MapEvent{
+
+class OnMovioMapa extends MapEvent {
   final LatLng centroMapa;
   const OnMovioMapa({required this.centroMapa});
 }

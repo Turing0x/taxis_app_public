@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class HistoryScreen extends StatelessWidget {
   final List<String> rutas = [
     'Ruta 1: Autobús         ${DateTime.now()}',

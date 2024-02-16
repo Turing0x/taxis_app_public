@@ -32,19 +32,16 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   Future getCurrentPosition() async {
     final position = await Geolocator.getCurrentPosition();
-    
+
     add(OnNewUserLocationEvent(LatLng(position.latitude, position.longitude)));
   }
 
   void startFollowingUsers() {
-   
-    positionStream = Geolocator.getPositionStream(locationSettings: const LocationSettings(
-      accuracy: LocationAccuracy.best,
-      distanceFilter: 10
-    )).listen((event) {
+    positionStream = Geolocator.getPositionStream(
+            locationSettings: const LocationSettings(accuracy: LocationAccuracy.best, distanceFilter: 10))
+        .listen((event) {
       final position = event;
-      add(OnNewUserLocationEvent(
-          LatLng(position.latitude, position.longitude)));
+      add(OnNewUserLocationEvent(LatLng(position.latitude, position.longitude)));
       add(OnStartFollowingUserEvent());
     });
   }
@@ -53,7 +50,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   void stopFollowingUsers() {
     positionStream?.cancel();
     add(OnStopFollowingUserEvent());
-   
   }
 
   @override

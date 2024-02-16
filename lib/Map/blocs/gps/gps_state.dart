@@ -16,8 +16,7 @@ class GpsState extends Equatable {
   }) =>
       GpsState(
         isGpsEnabled: isGpsEnabled ?? this.isGpsEnabled,
-        isGpsPermissionGranted:
-            isGpsPermissionGranted ?? this.isGpsPermissionGranted,
+        isGpsPermissionGranted: isGpsPermissionGranted ?? this.isGpsPermissionGranted,
       );
 
   @override

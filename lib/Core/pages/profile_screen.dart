@@ -16,7 +16,6 @@ class ProfileScreen extends StatelessWidget {
               radius: 50,
               backgroundImage: AssetImage('assets/profileImage.jpg'), // Reemplaza con la URL de tu imagen
             ),
-           
             const Text(
               'Nombre del Usuario',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -29,34 +28,40 @@ class ProfileScreen extends StatelessWidget {
               '+1234567890',
               style: TextStyle(fontSize: 16),
             ),
-             SizedBox(height: MediaQuery.of(context).size.height*0.2),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.2),
             ElevatedButton(
-              
-              style: const ButtonStyle(textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 25,color: Colors.black,)) ),
+              style: const ButtonStyle(
+                  textStyle: MaterialStatePropertyAll(TextStyle(
+                fontSize: 25,
+                color: Colors.black,
+              ))),
               onPressed: () {
                 // Acción para cambiar la contraseña
               },
               child: const Text('Cambiar Contraseña'),
             ),
             ElevatedButton(
-              style: const ButtonStyle(textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 25,color: Colors.black,)) ),
+              style: const ButtonStyle(
+                  textStyle: MaterialStatePropertyAll(TextStyle(
+                fontSize: 25,
+                color: Colors.black,
+              ))),
               onPressed: () {
                 // Acción para cambiar el número de teléfono
               },
-              child: const Text('Cambiar Número de Teléfono',),
+              child: const Text(
+                'Cambiar Número de Teléfono',
+              ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height*0.15),
-             ElevatedButton(
-              style: const ButtonStyle(
-               
-                backgroundColor: MaterialStatePropertyAll(Colors.blue)),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+            ElevatedButton(
+              style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.blue)),
               onPressed: () {
                 // Acción para Cerrar Sesion
               },
-              child: const Text('Cerrar Sesion',style: TextStyle(color:  Colors.black)),
-              
+              child: const Text('Cerrar Sesion', style: TextStyle(color: Colors.black)),
             ),
-             ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 // Acción para Eliminar Cuenta
               },
@@ -65,7 +70,10 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Eliminar Cuenta',style: TextStyle(color: Colors.black),),
+                  Text(
+                    'Eliminar Cuenta',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   Icon(Icons.delete)
                 ],
               ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
 
-
 class BtnToggleUser extends StatefulWidget {
   const BtnToggleUser({super.key});
 
@@ -21,16 +20,15 @@ class _BtnToggleUserState extends State<BtnToggleUser> {
         backgroundColor: Colors.white,
         maxRadius: 25,
         child: IconButton(
-          icon:  Icon(
-            (mapBloc.state.showMyRoute)? Icons.route:Icons.cancel_outlined,
+          icon: Icon(
+            (mapBloc.state.showMyRoute) ? Icons.route : Icons.cancel_outlined,
             color: Colors.black,
           ),
           onPressed: () {
             mapBloc.add(OnToggleUserRoute());
-            setState(() {
-              
-            },);
-            
+            setState(
+              () {},
+            );
           },
         ),
       ),

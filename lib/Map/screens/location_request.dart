@@ -8,12 +8,8 @@ class LocationRequest extends StatefulWidget {
 }
 
 class _LocationRequestState extends State<LocationRequest> {
-
   @override
   Widget build(BuildContext context) {
-
     return const Placeholder();
-
   }
-
 }

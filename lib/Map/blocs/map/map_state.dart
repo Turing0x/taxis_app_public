@@ -18,7 +18,7 @@ class MapState {
   }) : polylines = polylines ?? <String, Polyline>{};
 
   MapState copyWith({
-    LatLng? ubicacionCentral2,   
+    LatLng? ubicacionCentral2,
     bool? isMapInicialized2,
     bool? isFollowingUser2,
     bool? showMyRoute,
@@ -32,5 +32,4 @@ class MapState {
       showMyRoute: showMyRoute ?? this.showMyRoute,
     );
   }
-
 }

@@ -4,23 +4,13 @@ import 'package:taxis_app_public/Core/config/database/entities/login_data_servic
 Future<String> initialRoute() async {
   final role = await LoginDataService().getRole();
 
-  if (role != '' ) {
-    return _initialRouteByRole(role!);
+  if (role != '' && await isPermissionGranted()) {
+    return 'maps_screen';
   }
 
-  if(!await isPermissionGranted()) return 'location_permission';
+  if (!await isPermissionGranted()) return 'location_permission';
 
   return 'auth_page';
-}
-
-String _initialRouteByRole(String role) {
-  
-  Map<String, String> mainPages = {
-    'driver': 'home',
-    'client': 'main_commercial_page',
-  };
-
-  return mainPages[role]!;
 }
 
 Future<bool> isPermissionGranted() async {

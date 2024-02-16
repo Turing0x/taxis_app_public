@@ -14,9 +14,7 @@ class LoadingScreen extends StatelessWidget {
     return Scaffold(
       body: BlocBuilder<GpsBloc, GpsState>(
         builder: (context, state) {
-          return (state.isAllGranted)
-              ? const MapScreen()
-              : const GpsAcessScreen();
+          return (state.isAllGranted) ? const MapScreen() : const GpsAcessScreen();
         },
       ),
     );

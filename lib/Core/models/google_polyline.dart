@@ -12,12 +12,12 @@ class GooglePolyline {
   });
 
   factory GooglePolyline.fromJson(Map<String, dynamic> json) => GooglePolyline(
-    routes: List<Route>.from(json["routes"].map((x) => Route.fromJson(x))),
-  );
+        routes: List<Route>.from(json["routes"].map((x) => Route.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "routes": List<dynamic>.from(routes.map((x) => x.toJson())),
-  };
+        "routes": List<dynamic>.from(routes.map((x) => x.toJson())),
+      };
 }
 
 class Route {
@@ -32,16 +32,16 @@ class Route {
   });
 
   factory Route.fromJson(Map<String, dynamic> json) => Route(
-    distanceMeters: json["distanceMeters"],
-    duration: json["duration"],
-    polyline: Polyline.fromJson(json["polyline"]),
-  );
+        distanceMeters: json["distanceMeters"],
+        duration: json["duration"],
+        polyline: Polyline.fromJson(json["polyline"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "distanceMeters": distanceMeters,
-    "duration": duration,
-    "polyline": polyline.toJson(),
-  };
+        "distanceMeters": distanceMeters,
+        "duration": duration,
+        "polyline": polyline.toJson(),
+      };
 }
 
 class Polyline {
@@ -52,10 +52,10 @@ class Polyline {
   });
 
   factory Polyline.fromJson(Map<String, dynamic> json) => Polyline(
-    encodedPolyline: json["encodedPolyline"],
-  );
+        encodedPolyline: json["encodedPolyline"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "encodedPolyline": encodedPolyline,
-  };
+        "encodedPolyline": encodedPolyline,
+      };
 }

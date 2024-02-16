@@ -9,12 +9,12 @@ import 'package:taxis_app_public/Map/screens/loading_screen.dart';
 import 'package:taxis_app_public/Map/screens/map_screen.dart';
 
 final Map<String, Widget Function(BuildContext)> appRoutes = {
-  'usuarios'      : ( _ ) => const UsuariosPage(),
-  'chat'          : ( _ ) => const ChatPage(),
-  'auth_page'     : ( _ ) => const AuthPage(),
-  'register_page' : ( _ ) => const RegisterPage(),
-  'loading'       : ( _ ) => const LoadingScreen(),
-  'home'          : ( _ ) => const HomeScreen(),
-  'maps_screen'          : ( _ ) => const MapScreen(),
-  'location_permission' : ( _ ) => const GpsAcessScreen(),
+  'usuarios': (_) => const UsuariosPage(),
+  'chat': (_) => const ChatPage(),
+  'auth_page': (_) => const AuthPage(),
+  'register_page': (_) => const RegisterPage(),
+  'loading': (_) => const LoadingScreen(),
+  'home': (_) => const HomeScreen(),
+  'maps_screen': (_) => const MapScreen(),
+  'location_permission': (_) => const GpsAcessScreen(),
 };

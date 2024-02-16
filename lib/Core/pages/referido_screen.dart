@@ -17,27 +17,26 @@ class ReferidoScreen extends StatelessWidget {
             size: 200,
           ),
           Container(
-  child: Text(
-    'Tu código de referido: TKZNUOED',
-    style: TextStyle(
-      fontSize: 24,
-      color: Colors.amber[400],
-      shadows: const <Shadow>[
-        Shadow(
-          offset: Offset(2.0, 2.0),
-          blurRadius: 3.0,
-          color:Colors.yellow,
-        ),
-        Shadow(
-          offset: Offset(2.0, 2.0),
-          blurRadius: 8.0,
-          color: Colors.black,
-        ),
-      ],
-    ),
-  ),
-),
-         
+            child: Text(
+              'Tu código de referido: TKZNUOED',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.amber[400],
+                shadows: const <Shadow>[
+                  Shadow(
+                    offset: Offset(2.0, 2.0),
+                    blurRadius: 3.0,
+                    color: Colors.yellow,
+                  ),
+                  Shadow(
+                    offset: Offset(2.0, 2.0),
+                    blurRadius: 8.0,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+            ),
+          ),
           const Text(
             'Comparte este código de referido con sus amigos',
             style: TextStyle(fontSize: 16),
