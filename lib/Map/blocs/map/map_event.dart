@@ -1,10 +1,7 @@
 part of 'map_bloc.dart';
 
-abstract class MapEvent extends Equatable {
+abstract class MapEvent {
   const MapEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class OnMapaListo extends MapEvent {

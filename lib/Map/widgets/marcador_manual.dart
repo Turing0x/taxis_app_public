@@ -1,14 +1,18 @@
+import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:taxis_app_public/Core/config/database/entities/login_data_service.dart';
+import 'package:taxis_app_public/Core/config/server/socket.dart';
 import 'package:taxis_app_public/Map/blocs/busqueda/busqueda_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
-import 'package:taxis_app_public/Map/helpers/calculando_alerta.dart';
 import 'package:taxis_app_public/Map/services/traffic_services.dart';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:taxis_app_public/shared/widgets.dart';
 
 class MarcadorManual extends StatelessWidget {
   const MarcadorManual({super.key});
@@ -78,7 +82,9 @@ class _BuildMarcadorManual extends StatelessWidget {
   }
 
   Future<void> calcularDestino(BuildContext context) async {
-    calculandoAlerta(context);
+
+    final socketServicios = SocketService();
+
     PolylinePoints polylinePoints = PolylinePoints();
     final trafficService = TrafficService();
     final busquedaBloc = BlocProvider.of<BusquedaBloc>(context);
@@ -86,43 +92,62 @@ class _BuildMarcadorManual extends StatelessWidget {
     final miUbicaconBloc = BlocProvider.of<LocationBloc>(context);
     final inicio = miUbicaconBloc.state.lastKnowLocation;
     final fin = mapaBloc.state.ubicacionCentral;
-    //TODO:AGREGAR EN CUANTO TIEMPO DESEA SALIR
-    final resp = await trafficService.getCoordsInicioYDestino(inicio!, fin!, const Duration(minutes: 1));
-    final geometry = resp.routes[0].polyline;
-    final duration = resp.routes[0].duration;
-    final distance = resp.routes[0].distanceMeters;
 
-    final points = polylinePoints.decodePolyline(geometry.encodedPolyline);
-    final List<LatLng> coordsLists = points.map((point) => LatLng(point.latitude, point.longitude)).toList();
+    final userInfo = await LoginDataService().getUserInfo();
+    String userId = jsonDecode(userInfo!)['id'];
 
-    mapaBloc.add(OnCrearRutaInicioDestino(coords: coordsLists, distancia: distance.toDouble(), duration: duration));
-    Navigator.pop(context);
-    busquedaBloc.add(OnDesactivarMarcadorManual());
-    //String encodedPolyline = resp.routes[0].geometry;
+    trafficService.getCoordsInicioYDestino(inicio!, fin!, const Duration(minutes: 1)).then((value) {
+      
+      final geometry = value.routes[0].polyline;
+      String duration = value.routes[0].duration;
+      int distance = value.routes[0].distanceMeters;
 
-    // ignore: use_build_context_synchronously
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     return AlertDialog(
-    //       title: Text('Detalles del Destino'),
-    //       content: SingleChildScrollView(
-    //         child: ListBody(
-    //           children: <Widget>[
-    //             Text('La ruta calculada es: $encodedPolyline'),
-    //           ],
-    //         ),
-    //       ),
-    //       actions: <Widget>[
-    //         TextButton(
-    //           child: Text('OK'),
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
+      int intDuration = int.parse(duration.replaceAll('s', ''));
+
+      showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: dosisText('Detalles del Viaje'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                dosisBold('Inicio: ', inicio.toString(), 22),
+                dosisBold('Destino: ', fin.toString(), 22),
+                dosisBold('Distancia: ', distance.toString(), 22),
+                dosisBold('Tiempo de Viaje: ', ( intDuration / 60).toStringAsFixed(0), 22)
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: dosisText('Confirmar'),
+              onPressed: () async{
+                
+                final points = polylinePoints.decodePolyline(geometry.encodedPolyline);
+                final List<LatLng> coordsLists = points.map((point) => LatLng(point.latitude, point.longitude)).toList();
+
+                mapaBloc.add(OnCrearRutaInicioDestino(coords: coordsLists, distancia: distance.toDouble(), duration: duration));
+                busquedaBloc.add(OnDesactivarMarcadorManual());
+
+                socketServicios.socket.emit('confirm-trip', {
+                  'client': userId,
+                  'time': intDuration.toString(),
+                  'from': inicio.toString(),
+                  'to': fin.toString(),
+                  'distance': distance.toString(),
+                });
+
+                Navigator.pop(context);
+              
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    });
+    
   }
 }

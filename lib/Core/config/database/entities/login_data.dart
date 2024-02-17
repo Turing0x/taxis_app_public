@@ -7,6 +7,6 @@ class LoginData {
   Id id = Isar.autoIncrement;
 
   String? role;
-  String? userID;
   String? token;
+  String? userInfo;
 }

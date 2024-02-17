@@ -27,9 +27,9 @@ const LoginDataSchema = CollectionSchema(
       name: r'token',
       type: IsarType.string,
     ),
-    r'userID': PropertySchema(
+    r'userInfo': PropertySchema(
       id: 2,
-      name: r'userID',
+      name: r'userInfo',
       type: IsarType.string,
     )
   },
@@ -66,7 +66,7 @@ int _loginDataEstimateSize(
     }
   }
   {
-    final value = object.userID;
+    final value = object.userInfo;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -82,7 +82,7 @@ void _loginDataSerialize(
 ) {
   writer.writeString(offsets[0], object.role);
   writer.writeString(offsets[1], object.token);
-  writer.writeString(offsets[2], object.userID);
+  writer.writeString(offsets[2], object.userInfo);
 }
 
 LoginData _loginDataDeserialize(
@@ -95,7 +95,7 @@ LoginData _loginDataDeserialize(
   object.id = id;
   object.role = reader.readStringOrNull(offsets[0]);
   object.token = reader.readStringOrNull(offsets[1]);
-  object.userID = reader.readStringOrNull(offsets[2]);
+  object.userInfo = reader.readStringOrNull(offsets[2]);
   return object;
 }
 
@@ -539,36 +539,36 @@ extension LoginDataQueryFilter on QueryBuilder<LoginData, LoginData, QFilterCond
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDIsNull() {
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'userID',
+        property: r'userInfo',
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDIsNotNull() {
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'userID',
+        property: r'userInfo',
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDEqualTo(
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userID',
+        property: r'userInfo',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDGreaterThan(
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -576,14 +576,14 @@ extension LoginDataQueryFilter on QueryBuilder<LoginData, LoginData, QFilterCond
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'userID',
+        property: r'userInfo',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDLessThan(
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -591,14 +591,14 @@ extension LoginDataQueryFilter on QueryBuilder<LoginData, LoginData, QFilterCond
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'userID',
+        property: r'userInfo',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDBetween(
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -607,7 +607,7 @@ extension LoginDataQueryFilter on QueryBuilder<LoginData, LoginData, QFilterCond
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'userID',
+        property: r'userInfo',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -617,65 +617,65 @@ extension LoginDataQueryFilter on QueryBuilder<LoginData, LoginData, QFilterCond
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDStartsWith(
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'userID',
+        property: r'userInfo',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDEndsWith(
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'userID',
+        property: r'userInfo',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'userID',
+        property: r'userInfo',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'userID',
+        property: r'userInfo',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDIsEmpty() {
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userID',
+        property: r'userInfo',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userIDIsNotEmpty() {
+  QueryBuilder<LoginData, LoginData, QAfterFilterCondition> userInfoIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'userID',
+        property: r'userInfo',
         value: '',
       ));
     });
@@ -711,15 +711,15 @@ extension LoginDataQuerySortBy on QueryBuilder<LoginData, LoginData, QSortBy> {
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterSortBy> sortByUserID() {
+  QueryBuilder<LoginData, LoginData, QAfterSortBy> sortByuserInfo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'userID', Sort.asc);
+      return query.addSortBy(r'userInfo', Sort.asc);
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterSortBy> sortByUserIDDesc() {
+  QueryBuilder<LoginData, LoginData, QAfterSortBy> sortByuserInfoDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'userID', Sort.desc);
+      return query.addSortBy(r'userInfo', Sort.desc);
     });
   }
 }
@@ -761,15 +761,15 @@ extension LoginDataQuerySortThenBy on QueryBuilder<LoginData, LoginData, QSortTh
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterSortBy> thenByUserID() {
+  QueryBuilder<LoginData, LoginData, QAfterSortBy> thenByuserInfo() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'userID', Sort.asc);
+      return query.addSortBy(r'userInfo', Sort.asc);
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QAfterSortBy> thenByUserIDDesc() {
+  QueryBuilder<LoginData, LoginData, QAfterSortBy> thenByuserInfoDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'userID', Sort.desc);
+      return query.addSortBy(r'userInfo', Sort.desc);
     });
   }
 }
@@ -787,9 +787,9 @@ extension LoginDataQueryWhereDistinct on QueryBuilder<LoginData, LoginData, QDis
     });
   }
 
-  QueryBuilder<LoginData, LoginData, QDistinct> distinctByUserID({bool caseSensitive = true}) {
+  QueryBuilder<LoginData, LoginData, QDistinct> distinctByuserInfo({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'userID', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'userInfo', caseSensitive: caseSensitive);
     });
   }
 }
@@ -813,9 +813,9 @@ extension LoginDataQueryProperty on QueryBuilder<LoginData, LoginData, QQueryPro
     });
   }
 
-  QueryBuilder<LoginData, String?, QQueryOperations> userIDProperty() {
+  QueryBuilder<LoginData, String?, QQueryOperations> userInfoProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'userID');
+      return query.addPropertyName(r'userInfo');
     });
   }
 }

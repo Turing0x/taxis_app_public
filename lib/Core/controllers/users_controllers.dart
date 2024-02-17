@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:taxis_app_public/Core/config/database/entities/login_data.dart';
 import 'package:taxis_app_public/Core/config/database/entities/login_data_service.dart';
-import 'package:taxis_app_public/Core/riverpod/declarations.dart';
+import 'package:taxis_app_public/Core/models/driver_model.dart';
 import 'package:taxis_app_public/shared/widgets.dart';
 
 class UserControllers {
@@ -20,7 +20,7 @@ class UserControllers {
 
     _dio = Dio(
       BaseOptions(
-        baseUrl: Uri.http(dotenv.env['SERVER_URL']!).toString(),
+        baseUrl: Uri.https(dotenv.env['SERVER_URL']!).toString(),
         headers: {'Content-Type': 'application/json', 'access-token': token, 'Authorization': 'Bearer $token'},
         validateStatus: (status) => true,
       ),
@@ -28,18 +28,18 @@ class UserControllers {
   }
 
   Future<bool> login(String username, String pass) async {
-    authStatus.value = true;
     try {
       await _initializeDio();
       Response response =
           await _dio.post('/api/auth/signin', data: jsonEncode({'username': username, 'password': pass}));
-      authStatus.value = false;
 
       if (response.statusCode == 201) {
         String gettoken = response.data['data']['jwtToken'];
+        final getuser = response.data['data']['user'];
 
         LoginDataService().saveData(LoginData()
           ..token = gettoken
+          ..userInfo = jsonEncode(getuser)
           ..role = 'driver');
 
         showToast('Sesión iniciada correctamente', type: true);
@@ -47,7 +47,6 @@ class UserControllers {
       }
 
       showToast('Ocurrió un problema al iniciar sesión. Verifique los datos por favor');
-
       return false;
     } on DioException catch (_) {
       return false;
@@ -55,7 +54,6 @@ class UserControllers {
   }
 
   Future<bool> save(String name, String email, String username, String password) async {
-    authStatus.value = true;
     try {
       await _initializeDio();
       Response response = await _dio.post('/api/users/register',
@@ -67,7 +65,6 @@ class UserControllers {
             "type": "driver",
             "driver_info": {"driver_licence": "", "circulation_licence": "", "dni": ""}
           }));
-      authStatus.value = false;
 
       if (response.statusCode == 201) {
         showToast('Su cuenta ha sido creada exitosamente', type: true);
@@ -79,6 +76,31 @@ class UserControllers {
       return false;
     } on DioException catch (_) {
       return false;
+    }
+  }
+
+  Future<List<DriverModel>> getProfileInfo() async {
+    try {
+      await _initializeDio();
+      EasyLoading.show(status: 'Buscando su información...');
+
+      Response response = await _dio.get('/api/users/me');
+
+      List<DriverModel> list = [];
+
+      if (response.statusCode == 200) {
+        final userTemp = response.data['data'];
+        list.add(DriverModel.fromJson(userTemp));
+
+        EasyLoading.showSuccess('Información Cargada');
+        return list;
+      }
+
+      EasyLoading.showError('Ocurrió un problema al solicitar su información');
+      return [];
+    } on DioException catch (_) {
+      EasyLoading.showError('Ocurrió un problema al solicitar su información');
+      return [];
     }
   }
 

@@ -68,7 +68,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       absorbing: btnManager,
       child: Container(
         width: double.infinity,
-        decoration: (!btnManager) ? gradientBtn() : BoxDecoration(color: Colors.grey[200]),
+        decoration: (!btnManager)
+            ? gradientBtn()
+            : BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey[200]),
         height: 50,
         margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         child: OutlinedButton(
@@ -77,29 +79,31 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                 color: Colors.transparent,
               ),
             ),
-            onPressed: () {
-              try {
+            onPressed: () async {
+              setState(() {
                 btnManagerM.state = true;
+              });
 
-                final userCrtl = UserControllers();
-                String txtusername = username.text;
-                String txtpassword = password.text;
+              final userCrtl = UserControllers();
+              final contex = Navigator.of(context);
+              FocusScope.of(context).unfocus();
 
-                if (txtusername == '' || txtpassword == '') {
-                  showToast('Falta información para crear la cuenta. Rectifique por favor');
-                  btnManagerM.state = false;
-                  return;
-                }
+              String txtusername = username.text.trim();
+              String txtpassword = password.text.trim();
 
-                userCrtl.login(txtusername, txtpassword).then((value) {
-                  if (value) {
-                    Navigator.pushReplacementNamed(context, 'maps_screen');
-                  }
-                });
+              if (txtusername == '' || txtpassword == '') {
+                showToast('Falta información para crear la cuenta. Rectifique por favor');
                 btnManagerM.state = false;
-              } catch (e) {
-                btnManagerM.state = false;
+                return;
               }
+
+              bool resp = await userCrtl.login(txtusername, txtpassword);
+              if (resp) {
+                btnManagerM.state = false;
+                contex.pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
+              }
+
+              btnManagerM.state = false;
             },
             child: dosisText((!btnManager) ? 'Acceder' : 'Espere por favor...',
                 size: 23, fontWeight: FontWeight.bold, color: Colors.black87)),

@@ -32,11 +32,11 @@ class LoginDataService {
     return '';
   }
 
-  Future<String?> getUserID() async {
+  Future<String?> getUserInfo() async {
     final isar = await db;
     final getter = await isar.loginDatas.where().findAll();
-    if (getter.isNotEmpty && getter[0].userID != null) {
-      return getter[0].userID;
+    if (getter.isNotEmpty && getter[0].userInfo != null) {
+      return getter[0].userInfo;
     }
     return '';
   }

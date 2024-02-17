@@ -40,13 +40,11 @@ class MapView extends StatelessWidget {
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
                 polylines: mapBloc.state.polylines.values.toSet(),
+                markers: mapBloc.state.markers.values.toSet(),
                 onMapCreated: mapBloc.initMapa,
               );
             },
           ),
         ));
-
-    // TODO: Markers
-    //TODO: Polylines
   }
 }

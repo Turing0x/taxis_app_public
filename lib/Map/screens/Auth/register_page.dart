@@ -78,15 +78,17 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
               ),
               onPressed: () async {
                 try {
+
+                  final nav = Navigator.of(context);
                   btnManagerM.state = true;
                   FocusScope.of(context).unfocus();
 
                   final userCrtl = UserControllers();
 
-                  String fullnameTxt = fullname.text;
-                  String emailTxt = email.text;
-                  String usernameTxt = username.text;
-                  String passwordTxt = password.text;
+                  String fullnameTxt = fullname.text.trim();
+                  String emailTxt = email.text.trim();
+                  String usernameTxt = username.text.trim();
+                  String passwordTxt = password.text.trim();
 
                   if (fullnameTxt == '' || emailTxt == '' || usernameTxt == '' || passwordTxt == '') {
                     showToast('Falta información para crear la cuenta. Rectifique por favor');
@@ -105,7 +107,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     return;
                   }
 
-                  await userCrtl.save(fullnameTxt, emailTxt, usernameTxt, passwordTxt);
+                  bool result = await userCrtl.save(fullnameTxt, emailTxt, usernameTxt, passwordTxt);
+                  if(result){
+                    nav.pushNamed('auth_page');
+                  }
 
                   btnManagerM.state = false;
                 } catch (e) {
