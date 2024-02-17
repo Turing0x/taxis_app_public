@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/themes/uber.dart';
@@ -89,15 +88,15 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     } else if (event is OnToggleUserRoute) {
       yield* _onToggleUserRoute(event);
     } else if (event is OnStartFollowingUser) {
-      yield* _OnStartFollowingUser(event);
+      yield* _onStartFollowingUser(event);
     } else if (event is OnMovioMapa) {
       yield state.copyWith(ubicacionCentral2: event.centroMapa);
     } else if (event is OnCrearRutaInicioDestino) {
-      yield* _OnCrearRutaInicioDestino(event);
+      yield* onCrearRutaInicioDestino(event);
     }
   }
 
-  Stream<MapState> _OnStartFollowingUser(OnStartFollowingUser event) async* {
+  Stream<MapState> _onStartFollowingUser(OnStartFollowingUser event) async* {
     yield state.copyWith(isFollowingUser2: !state.isFollowingUser);
   }
 
@@ -125,13 +124,28 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     yield state.copyWith(showMyRoute: !state.showMyRoute, polylines2: currrentPolylines);
   }
 
-  Stream<MapState> _OnCrearRutaInicioDestino(OnCrearRutaInicioDestino event) async* {
+  Stream<MapState> onCrearRutaInicioDestino(OnCrearRutaInicioDestino event) async* {
     _miRutaDestino = _miRutaDestino.copyWith(pointsParam: event.coords);
     final currentPolylines = state.polylines;
     currentPolylines['myRouteD'] = _miRutaDestino;
 
-    yield state.copyWith(polylines2: currentPolylines
-        //TODO:Marcadores
-        );
+    final markerInicio = Marker(
+      markerId: const MarkerId('inicio'),
+      position: event.coords[0]
+    );
+
+    final markerDestino = Marker(
+      markerId: const MarkerId('destino'),
+      position: event.coords[event.coords.length - 1]
+    );
+
+    final newMarkers = { ...state.markers };
+    newMarkers['inicio'] = markerInicio;
+    newMarkers['destino'] = markerDestino;
+
+    yield state.copyWith(
+      polylines2: currentPolylines,
+      markers2: newMarkers
+    );
   }
 }

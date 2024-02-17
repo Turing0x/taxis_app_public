@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taxis_app_public/Core/config/server/socket.dart';
 import 'package:taxis_app_public/Core/config/theme/app_theme.dart';
 import 'package:taxis_app_public/Core/config/utils/initial_route.dart';
 import 'package:taxis_app_public/Map/blocs/busqueda/busqueda_bloc.dart';
@@ -12,11 +12,12 @@ import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
 import 'package:taxis_app_public/routes/routes.dart';
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
   await dotenv.load(fileName: '.env');
 
   final rutIni = await initialRoute();
+  SocketService().initConnection();
 
   runApp(MultiBlocProvider(
       providers: [
