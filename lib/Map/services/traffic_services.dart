@@ -42,7 +42,7 @@ class TrafficService {
       ),
     );
   }
-
+    
   Future<DrivingResponse> getCoordsInicioYDestino(LatLng inicio, LatLng destino, Duration tiempoSalida) async {
     String fecha = DateTime.now().add(tiempoSalida).toUtc().toIso8601String();
     await _initializeDio();
@@ -74,51 +74,52 @@ class TrafficService {
     return DrivingResponse.fromJson(response.data);
   }
 
-// Future getPlacesPorQuery(String busqueda, LatLng proximidad) async {
-//   await _initializeDio();
-//   print('Buscando!!!!!!!!!!!!!!!!!!!!');
-//   _dio.options.headers['Content-Type'] = 'application/json';
-//   _dio.options.headers['X-Goog-Api-Key'] = 'AIzaSyD02_rRNBExD1cmU8I684O-Kt5UGsN3Hs4';
+Future getPlacesPorQuery(String busqueda, LatLng proximidad) async {
+  await _initializeDio();
+  print('Buscando!!!!!!!!!!!!!!!!!!!!');
+  _dio.options.headers['Content-Type'] = 'application/json';
+  _dio.options.headers['X-Goog-Api-Key'] = 'AIzaSyD02_rRNBExD1cmU8I684O-Kt5UGsN3Hs4';
 
-//   String url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
-//   Map<String, dynamic> params = {
-//     'input': busqueda,
-//     'inputtype': 'textquery',
-//     'fields': 'name,geometry',
-//     'locationbias': 'circle:${proximidad.latitude},${proximidad.longitude},10000',
-//     'region': 'CU',
-//     'key':'AIzaSyD02_rRNBExD1cmU8I684O-Kt5UGsN3Hs4' // Ajusta el radio según sea necesario
-//   };
-// try{
-//   if ( true
-//   //  response.statusCode ==  200 && response.data['status'] == 'OK'
-//     ) {
-//  // return  response.data;
-//  //TODO:CambiarJsonString por response.data
-//  return FindPlacesRespose.fromJson(jsonString);
-//   } else {
-//    throw Exception('Error al buscar lugares: ${response.data['error_message']}');
-//   }
-// } catch(e){
-// return FindPlacesRespose(candidates: [], status: '400');
-// }
-//   //final response = await _dio.get(url, queryParameters: params);
-
-// }
-
-// void getSugerenciasPorQuery( String busqueda, LatLng proximidad ) {
-
-//   debouncer.value = '';
-//   debouncer.onValue = ( value ) async {
-//     final resultados = await getPlacesPorQuery(value, proximidad);
-//     _sugerenciasStreamController.add(resultados);
-//   };
-
-//   final timer = Timer.periodic(const Duration(milliseconds: 200), (_) {
-//     debouncer.value = busqueda;
-//   });
-
-//   Future.delayed(Duration(milliseconds: 201)).then((_) => timer.cancel());
-
-// }
+  String url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
+  Map<String, dynamic> params = {
+    'input': busqueda,
+    'inputtype': 'textquery',
+    'fields': 'name,geometry',
+    'locationbias': 'circle:${proximidad.latitude},${proximidad.longitude},10000',
+    'region': 'CU',
+    'key':'AIzaSyD02_rRNBExD1cmU8I684O-Kt5UGsN3Hs4' // Ajusta el radio según sea necesario
+  };
+try{
+  if ( true
+  //  response.statusCode ==  200 && response.data['status'] == 'OK'
+    ) {
+ // return  response.data;
+ //TODO:CambiarJsonString por response.data
+ return FindPlacesRespose.fromJson(jsonString);
+ // } else {
+ //  throw Exception('Error al buscar lugares: ${response.data['error_message']}');
+  }
+} catch(e){
+return FindPlacesRespose(candidates: [], status: '400');
 }
+  //final response = await _dio.get(url, queryParameters: params);
+
+}
+
+void getSugerenciasPorQuery( String busqueda, LatLng proximidad ) {
+
+  debouncer.value = '';
+  debouncer.onValue = ( value ) async {
+    final resultados = await getPlacesPorQuery(value, proximidad);
+    _sugerenciasStreamController.add(resultados);
+  };
+
+  final timer = Timer.periodic(const Duration(milliseconds: 200), (_) {
+    debouncer.value = busqueda;
+  });
+
+  Future.delayed(Duration(milliseconds: 201)).then((_) => timer.cancel());
+
+}
+}
+

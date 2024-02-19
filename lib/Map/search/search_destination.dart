@@ -67,7 +67,7 @@ class SearchDestination extends SearchDelegate<SearchResults> {
       return Container();
     }
 //(query.trim(), proximidad)
-    // trafficService.getSugerenciasPorQuery(query.trim(), proximidad);
+    trafficService.getSugerenciasPorQuery(query.trim(), proximidad);
     return StreamBuilder(
       stream: trafficService.sugerenciasStream,
       builder: (context, AsyncSnapshot snapshot) {
@@ -90,9 +90,11 @@ class SearchDestination extends SearchDelegate<SearchResults> {
                 leading: const Icon(Icons.place),
                 title: Text(lugar.formattedAddress),
                 onTap: () {
-                  if (kDebugMode) {
-                    print(lugar);
-                  }
+                  close(context, SearchResults(
+                    cancelo: false,
+                    manual: false,
+                    position: LatLng(lugar.geometry.location.lat, lugar.geometry.location.lng),
+                    nombreDestino: 'lugar.name'));
                 },
               );
             },

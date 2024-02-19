@@ -95,7 +95,17 @@ class _BuildMarcadorManual extends StatelessWidget {
 
     final userInfo = await LoginDataService().getUserInfo();
     String userId = jsonDecode(userInfo!)['id'];
-
+     socketServicios.socket.emit('confirm-trip', {
+                  'client': userId,
+                  'time': 100,
+                  'from': inicio.toString(),
+                  'to': fin.toString(),
+                  'distance': 100,
+                });
+    
+    
+    
+    
     trafficService.getCoordsInicioYDestino(inicio!, fin!, const Duration(minutes: 1)).then((value) {
       
       final geometry = value.routes[0].polyline;
@@ -130,13 +140,7 @@ class _BuildMarcadorManual extends StatelessWidget {
                 mapaBloc.add(OnCrearRutaInicioDestino(coords: coordsLists, distancia: distance.toDouble(), duration: duration));
                 busquedaBloc.add(OnDesactivarMarcadorManual());
 
-                socketServicios.socket.emit('confirm-trip', {
-                  'client': userId,
-                  'time': intDuration.toString(),
-                  'from': inicio.toString(),
-                  'to': fin.toString(),
-                  'distance': distance.toString(),
-                });
+               
 
                 Navigator.pop(context);
               
@@ -150,4 +154,5 @@ class _BuildMarcadorManual extends StatelessWidget {
     });
     
   }
+  
 }
