@@ -23,7 +23,7 @@ class DrivingResponse {
 class Route {
   int distanceMeters;
   String duration;
-  Polyline polyline;
+  PolylineResponse polyline;
 
   Route({
     required this.distanceMeters,
@@ -38,7 +38,7 @@ class Route {
   factory Route.fromJson(Map<String, dynamic> json) => Route(
         distanceMeters: json["distanceMeters"],
         duration: json["duration"],
-        polyline: Polyline.fromJson(json["polyline"]),
+        polyline: PolylineResponse.fromJson(json["polyline"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,18 +48,18 @@ class Route {
       };
 }
 
-class Polyline {
+class PolylineResponse {
   String encodedPolyline;
 
-  Polyline({
+  PolylineResponse({
     required this.encodedPolyline,
   });
 
-  factory Polyline.fromRawJson(String str) => Polyline.fromJson(json.decode(str));
+  factory PolylineResponse.fromRawJson(String str) => PolylineResponse.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Polyline.fromJson(Map<String, dynamic> json) => Polyline(
+  factory PolylineResponse.fromJson(Map<String, dynamic> json) => PolylineResponse(
         encodedPolyline: json["encodedPolyline"],
       );
 

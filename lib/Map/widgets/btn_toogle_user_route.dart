@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taxis_app_public/Map/blocs/busqueda/busqueda_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
+import 'package:taxis_app_public/Map/widgets/propiedades_ruta.dart';
 
 class BtnToggleUser extends StatefulWidget {
   const BtnToggleUser({super.key});
@@ -25,9 +27,7 @@ class _BtnToggleUserState extends State<BtnToggleUser> {
             color: Colors.black,
           ),
           onPressed: () {
-            mapBloc.add(OnToggleUserRoute());
-            setState(
-              () {},
+           showBottomSheet(context: context, builder: (context) => CrearPropiedadesRuta(origenSeleccionado: ValueNotifier(BlocProvider.of<BusquedaBloc>(context).state.historial.first), destinoSeleccionado: ValueNotifier(BlocProvider.of<BusquedaBloc>(context).state.historial.first))
             );
           },
         ),

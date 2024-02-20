@@ -34,9 +34,10 @@ class CustomSearchBar extends StatelessWidget {
         width: width,
         child: GestureDetector(
           onTap: () async {
+              final historial = BlocProvider.of<BusquedaBloc>(context).state.historial;
             final resultado = await showSearch(
                 context: context,
-                delegate: SearchDestination(BlocProvider.of<LocationBloc>(context).state.lastKnowLocation!));
+                delegate: SearchDestination(BlocProvider.of<LocationBloc>(context).state.lastKnowLocation!,historial));
             retornoBusqueda(resultado!, context);
           },
           child: Container(
@@ -63,6 +64,7 @@ class CustomSearchBar extends StatelessWidget {
     //Calcula Ruta por Result
      PolylinePoints polylinePoints = PolylinePoints();
   final trafficService =TrafficService();
+  final busquedaBloc = BlocProvider.of<BusquedaBloc>(context);
   final mapaBloc = BlocProvider.of<MapBloc>(context);
   final inicio = BlocProvider.of<LocationBloc>(context).state.lastKnowLocation!;
   final destino =result.position;
@@ -73,11 +75,16 @@ class CustomSearchBar extends StatelessWidget {
   final points = polylinePoints.decodePolyline(geometry.encodedPolyline);
   final List<LatLng> rutaCoordenadas = points.map((point) => LatLng(point.latitude, point.longitude)).toList();
   mapaBloc.add(OnCrearRutaInicioDestino(coords: rutaCoordenadas , distancia: distance.toDouble(), duration: duration));
-  }
+   //TODO:Agregar al Historial
+  
+   busquedaBloc.add(OnAgregarHistorial(result: result));
+   
+   
+   }
  
 
 
 
 
-
+ 
 }
