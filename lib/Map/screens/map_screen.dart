@@ -9,6 +9,7 @@ import 'package:taxis_app_public/Map/widgets/btn_follow_user.dart';
 import 'package:taxis_app_public/Map/widgets/btn_location.dart';
 import 'package:taxis_app_public/Map/widgets/btn_toogle_user_route.dart';
 import 'package:taxis_app_public/Map/widgets/marcador_manual.dart';
+import 'package:taxis_app_public/Map/widgets/perosnalizar_rutasbuttom.dart';
 import 'package:taxis_app_public/Map/widgets/searchbar.dart';
 
 class MapScreen extends StatefulWidget {
@@ -61,7 +62,8 @@ class _MapScreenState extends State<MapScreen> {
       floatingActionButton: const Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          
+          PropiedadesRuta(),
+
           BtnToggleUser(),
           BtnFollowUser(),
           BtnCurrentLocation(),
