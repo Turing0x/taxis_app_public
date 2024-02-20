@@ -9,9 +9,11 @@ import 'package:taxis_app_public/Core/config/server/socket.dart';
 import 'package:taxis_app_public/Map/blocs/busqueda/busqueda_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/location/location_bloc.dart';
 import 'package:taxis_app_public/Map/blocs/map/map_bloc.dart';
+import 'package:taxis_app_public/Map/models/traffic_response.dart';
 import 'package:taxis_app_public/Map/services/traffic_services.dart';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:taxis_app_public/Map/widgets/propiedades_ruta.dart';
 import 'package:taxis_app_public/shared/widgets.dart';
 
 class MarcadorManual extends StatelessWidget {
@@ -95,7 +97,17 @@ class _BuildMarcadorManual extends StatelessWidget {
 
     final userInfo = await LoginDataService().getUserInfo();
     String userId = jsonDecode(userInfo!)['id'];
-
+     socketServicios.socket.emit('confirm-trip', {
+                  'client': userId,
+                  'time': 100,
+                  'from': inicio.toString(),
+                  'to': fin.toString(),
+                  'distance': 100,
+                });
+    
+    
+    
+    
     trafficService.getCoordsInicioYDestino(inicio!, fin!, const Duration(minutes: 1)).then((value) {
       
       final geometry = value.routes[0].polyline;
@@ -124,19 +136,13 @@ class _BuildMarcadorManual extends StatelessWidget {
               child: dosisText('Confirmar'),
               onPressed: () async{
                 
-                final points = polylinePoints.decodePolyline(geometry.encodedPolyline);
-                final List<LatLng> coordsLists = points.map((point) => LatLng(point.latitude, point.longitude)).toList();
+                showBottomSheet(context: context, builder: (context) {
+                  return  CrearPropiedadesRuta(destinoSeleccionado: ValueNotifier(busquedaBloc.state.historial[0],),origenSeleccionado: ValueNotifier(busquedaBloc.state.historial[0],),);
+                },);
+                
+              	//_crearRuta(polylinePoints, geometry, mapaBloc, distance, duration, busquedaBloc);
 
-                mapaBloc.add(OnCrearRutaInicioDestino(coords: coordsLists, distancia: distance.toDouble(), duration: duration));
-                busquedaBloc.add(OnDesactivarMarcadorManual());
-
-                socketServicios.socket.emit('confirm-trip', {
-                  'client': userId,
-                  'time': intDuration.toString(),
-                  'from': inicio.toString(),
-                  'to': fin.toString(),
-                  'distance': distance.toString(),
-                });
+               
 
                 Navigator.pop(context);
               
@@ -150,4 +156,18 @@ class _BuildMarcadorManual extends StatelessWidget {
     });
     
   }
+
+  void _crearRuta(PolylinePoints polylinePoints, PolylineResponse geometry, MapBloc mapaBloc, int distance, String duration, BusquedaBloc busquedaBloc) {
+     final points = polylinePoints.decodePolyline(geometry.encodedPolyline);
+    final List<LatLng> coordsLists = points.map((point) => LatLng(point.latitude, point.longitude)).toList();
+    
+    mapaBloc.add(OnCrearRutaInicioDestino(coords: coordsLists, distancia: distance.toDouble(), duration: duration));
+    busquedaBloc.add(OnDesactivarMarcadorManual());
+  }
+  
 }
+
+
+
+
+

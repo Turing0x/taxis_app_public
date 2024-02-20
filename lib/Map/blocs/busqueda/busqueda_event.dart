@@ -1,12 +1,16 @@
 part of 'busqueda_bloc.dart';
 
-sealed class BusquedaEvent extends Equatable {
+sealed class BusquedaEvent  {
   const BusquedaEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class OnActivarMarcadorManual extends BusquedaEvent {}
 
 class OnDesactivarMarcadorManual extends BusquedaEvent {}
+
+class OnAgregarHistorial  extends BusquedaEvent {
+  final SearchResults result;
+
+  OnAgregarHistorial({required this.result});
+}
+
