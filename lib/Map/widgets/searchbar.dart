@@ -68,7 +68,7 @@ class CustomSearchBar extends StatelessWidget {
   final mapaBloc = BlocProvider.of<MapBloc>(context);
   final inicio = BlocProvider.of<LocationBloc>(context).state.lastKnowLocation!;
   final destino =result.position;
-  final drivingResponse = await trafficService.getCoordsInicioYDestino(inicio, destino!, const Duration(minutes: 1));
+  final drivingResponse = await trafficService.getCoordsInicioYDestino(inicio, destino!, const Duration(minutes: 1),context);
   final geometry =drivingResponse.routes[0].polyline;
   final duration =drivingResponse.routes[0].duration;
   final distance =drivingResponse.routes[0].distanceMeters;

@@ -4,8 +4,9 @@
 // import 'package:frontend_loreal/design/common/encabezado.dart';
 // import 'package:frontend_loreal/models/Horario/time_model.dart';
 // import 'package:intl/intl.dart';
+// import 'package:taxis_app_public/shared/widgets.dart';
 
-// final timeControllers = TimeControllers();
+
 // class TimePage extends StatefulWidget {
 //   const TimePage({super.key});
 
@@ -19,21 +20,7 @@
 //   TimeOfDay nigthStart = const TimeOfDay(hour: 00, minute: 00);
 //   TimeOfDay nigthEnd = const TimeOfDay(hour: 00, minute: 00);
 
-//   @override
-//   void initState() {
-//     Future<List<Time>> times = timeControllers.getDataTime();
-//     times.then((value) {
-//       if (value.isNotEmpty) {
-//         setState(() {
-//           dayStart = stringToTimeOfDay(value[0].dayStart);
-//           dayEnd = stringToTimeOfDay(value[0].dayEnd);
-//           nigthStart = stringToTimeOfDay(value[0].nightStart);
-//           nigthEnd = stringToTimeOfDay(value[0].nightEnd);
-//         });
-//       }
-//     });
-//     super.initState();
-//   }
+ 
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -57,12 +44,10 @@
 //                     backgroundColor: Colors.blue[300],
 //                     elevation: 2,
 //                   ),
-//                   child: textoDosis('Guardar cambios', 20, color: Colors.white),
-//                   onPressed: () => timeControllers.saveDataTime(
-//                       dayStart.format(context),
-//                       dayEnd.format(context),
-//                       nigthStart.format(context),
-//                       nigthEnd.format(context))),
+//                   child: dosisText('Guardar cambios', size: 20, color: Colors.white),
+//                   onPressed: () 
+                  
+//                   {}),
 //             ),
 //           ],
 //         ),
@@ -76,7 +61,7 @@
 //       child: Row(
 //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //         children: [
-//           textoDosis('Inicio: ', 20, fontWeight: FontWeight.bold),
+//           dosisText('Inicio: ', size: 20, fontWeight: FontWeight.bold),
 //           Flexible(
 //             child: Container(
 //               height: 40,
@@ -85,12 +70,12 @@
 //               decoration: BoxDecoration(
                   
 //                   borderRadius: BorderRadius.circular(10)),
-//               child: textoDosis(dayStart.format(context), 20),
+//               child: dosisText(dayStart.format(context), size:20),
 //             ),
 //           ),
 //           Flexible(
 //             child: OutlinedButton(
-//                 child: textoDosis('Cambiar', 16),
+//                 child: dosisText('Cambiar',size: 16),
 //                 onPressed: () async {
 //                   final TimeOfDay? newTime = await showTimePicker(
 //                     context: context,
@@ -114,7 +99,7 @@
 //       child: Row(
 //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //         children: [
-//           textoDosis('Cierre: ', 20, fontWeight: FontWeight.bold),
+//           dosisText('Cierre: ', size: 20, fontWeight: FontWeight.bold),
 //           Flexible(
 //             child: Container(
 //               height: 40,
@@ -123,12 +108,12 @@
 //               decoration: BoxDecoration(
                   
 //                   borderRadius: BorderRadius.circular(10)),
-//               child: textoDosis(dayEnd.format(context), 20),
+//               child: dosisText(dayEnd.format(context),size: 20),
 //             ),
 //           ),
 //           Flexible(
 //             child: OutlinedButton(
-//                 child: textoDosis('Cambiar', 16),
+//                 child: dosisText('Cambiar',size: 16),
 //                 onPressed: () async {
 //                   final TimeOfDay? newTime = await showTimePicker(
 //                     context: context,
@@ -152,7 +137,7 @@
 //       child: Row(
 //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //         children: [
-//           textoDosis('Inicio: ', 20, fontWeight: FontWeight.bold),
+//           dosisText('Inicio: ',size: 20, fontWeight: FontWeight.bold),
 //           Flexible(
 //             child: Container(
 //               height: 40,
@@ -161,12 +146,12 @@
 //               decoration: BoxDecoration(
                   
 //                   borderRadius: BorderRadius.circular(10)),
-//               child: textoDosis(nigthStart.format(context), 20),
+//               child: dosisText(nigthStart.format(context),size: 20),
 //             ),
 //           ),
 //           Flexible(
 //             child: OutlinedButton(
-//                 child: textoDosis('Cambiar', 16),
+//                 child: dosisText('Cambiar',size:  16),
 //                 onPressed: () async {
 //                   final TimeOfDay? newTime = await showTimePicker(
 //                     context: context,
@@ -190,7 +175,7 @@
 //       child: Row(
 //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //         children: [
-//           textoDosis('Cierre: ', 20, fontWeight: FontWeight.bold),
+//           dosisText('Cierre: ',size: 20, fontWeight: FontWeight.bold),
 //           Flexible(
 //             child: Container(
 //               height: 40,
@@ -199,12 +184,12 @@
 //               decoration: BoxDecoration(
                   
 //                   borderRadius: BorderRadius.circular(10)),
-//               child: textoDosis(nigthEnd.format(context), 20),
+//               child: dosisText(nigthEnd.format(context),size: 20),
 //             ),
 //           ),
 //           Flexible(
 //             child: OutlinedButton(
-//                 child: textoDosis('Cambiar', 16),
+//                 child: dosisText('Cambiar', size: 16),
 //                 onPressed: () async {
 //                   final TimeOfDay? newTime = await showTimePicker(
 //                     context: context,

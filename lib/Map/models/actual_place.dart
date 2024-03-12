@@ -1,64 +1,98 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-class FindPlacesRespose {
-    List<Candidate> candidates;
-    String status;
+class ActualPlacesRespose {
+    List<Result> results;
 
-    FindPlacesRespose({
-        required this.candidates,
-        required this.status,
+    ActualPlacesRespose({
+        required this.results,
     });
 
-    factory FindPlacesRespose.fromRawJson(String str) => FindPlacesRespose.fromJson(json.decode(str));
+    factory ActualPlacesRespose.fromRawJson(String str) => ActualPlacesRespose.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory FindPlacesRespose.fromJson(Map<String, dynamic> json) => FindPlacesRespose(
-        candidates: List<Candidate>.from(json["candidates"].map((x) => Candidate.fromJson(x))),
-        status: json["status"],
+    factory ActualPlacesRespose.fromJson(Map<String, dynamic> json) => ActualPlacesRespose(
+        results: List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "candidates": List<dynamic>.from(candidates.map((x) => x.toJson())),
-        "status": status,
+        "results": List<dynamic>.from(results.map((x) => x.toJson())),
     };
 }
 
-class Candidate {
+class Result {
+    List<AddressComponent> addressComponents;
     String formattedAddress;
     Geometry geometry;
-    String name;
+    String placeId;
+    List<String> types;
 
-    Candidate({
+    Result({
+        required this.addressComponents,
         required this.formattedAddress,
         required this.geometry,
-        required this.name,
+        required this.placeId,
+        required this.types,
     });
 
-    factory Candidate.fromRawJson(String str) => Candidate.fromJson(json.decode(str));
+    factory Result.fromRawJson(String str) => Result.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory Candidate.fromJson(Map<String, dynamic> json) => Candidate(
+    factory Result.fromJson(Map<String, dynamic> json) => Result(
+        addressComponents: List<AddressComponent>.from(json["address_components"].map((x) => AddressComponent.fromJson(x))),
         formattedAddress: json["formatted_address"],
         geometry: Geometry.fromJson(json["geometry"]),
-        name: json["name"],
+        placeId: json["place_id"],
+        types: List<String>.from(json["types"].map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
+        "address_components": List<dynamic>.from(addressComponents.map((x) => x.toJson())),
         "formatted_address": formattedAddress,
         "geometry": geometry.toJson(),
-        "name": name,
+        "place_id": placeId,
+        "types": List<dynamic>.from(types.map((x) => x)),
+    };
+}
+
+class AddressComponent {
+    String longName;
+    String shortName;
+    List<String> types;
+
+    AddressComponent({
+        required this.longName,
+        required this.shortName,
+        required this.types,
+    });
+
+    factory AddressComponent.fromRawJson(String str) => AddressComponent.fromJson(json.decode(str));
+
+    String toRawJson() => json.encode(toJson());
+
+    factory AddressComponent.fromJson(Map<String, dynamic> json) => AddressComponent(
+        longName: json["long_name"],
+        shortName: json["short_name"],
+        types: List<String>.from(json["types"].map((x) => x)),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "long_name": longName,
+        "short_name": shortName,
+        "types": List<dynamic>.from(types.map((x) => x)),
     };
 }
 
 class Geometry {
     Location location;
+    String locationType;
     Viewport viewport;
 
     Geometry({
         required this.location,
+        required this.locationType,
         required this.viewport,
     });
 
@@ -68,11 +102,13 @@ class Geometry {
 
     factory Geometry.fromJson(Map<String, dynamic> json) => Geometry(
         location: Location.fromJson(json["location"]),
+        locationType: json["location_type"],
         viewport: Viewport.fromJson(json["viewport"]),
     );
 
     Map<String, dynamic> toJson() => {
         "location": location.toJson(),
+        "location_type": locationType,
         "viewport": viewport.toJson(),
     };
 }

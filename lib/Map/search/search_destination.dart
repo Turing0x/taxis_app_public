@@ -104,8 +104,8 @@ class SearchDestination extends SearchDelegate<SearchResults> {
                     manual: false,
                     favorito: false,
                     position: LatLng(lugar.geometry.location.lat, lugar.geometry.location.lng),
-                    nombreDestino: 'lugar.name',
-                    descripcion: 'lugar.descripcion'));
+                    nombreDestino: lugar.name,
+                    descripcion: lugar.formattedAddress));
                 },
               );
             },

@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
+
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxis_app_public/Map/helpers/debouncer.dart';
 import 'package:taxis_app_public/Map/models/places_results.dart';
@@ -17,21 +20,7 @@ class TrafficService {
   final StreamController<FindPlacesRespose> _sugerenciasStreamController =
       StreamController<FindPlacesRespose>.broadcast();
   Stream<FindPlacesRespose> get sugerenciasStream => _sugerenciasStreamController.stream;
-  Map<String, dynamic> jsonString = {
-    "candidates": [
-      {
-        "formatted_address": "1600 Amphitheatre Parkway, Mountain View, CA   94043, USA",
-        "geometry": {
-          "location": {"lat": 37.4224764, "lng": -122.0842499},
-          "viewport": {
-            "northeast": {"lat": 37.4238253802915, "lng": -122.0829009197085},
-            "southwest": {"lat": 37.4211274197085, "lng": -122.0855988802915}
-          }
-        }
-      }
-    ],
-    "status": "OK"
-  };
+
   Future<void> _initializeDio() async {
     _dio = Dio(
       BaseOptions(
@@ -43,7 +32,7 @@ class TrafficService {
     );
   }
     
-  Future<DrivingResponse> getCoordsInicioYDestino(LatLng inicio, LatLng destino, Duration tiempoSalida) async {
+  Future<DrivingResponse> getCoordsInicioYDestino(LatLng inicio, LatLng destino, Duration tiempoSalida,BuildContext context) async {
     String fecha = DateTime.now().add(tiempoSalida).toUtc().toIso8601String();
     await _initializeDio();
     _dio.options.headers['Content-Type'] = 'application/json';
@@ -70,7 +59,11 @@ class TrafficService {
       "units": "IMPERIAL"
     };
     final response = await _dio.post(url, data: data);
-
+if(response.data["routes"].toString() ==''){
+   showDialog(context: context, builder: (context) => SnackBar(
+        content: Text('No hay ruta disponible'),
+      ));
+}
     return DrivingResponse.fromJson(response.data);
   }
 
@@ -84,18 +77,21 @@ Future getPlacesPorQuery(String busqueda, LatLng proximidad) async {
   Map<String, dynamic> params = {
     'input': busqueda,
     'inputtype': 'textquery',
-    'fields': 'name,geometry',
+    'fields': 'name,geometry,formatted_address',
     'locationbias': 'circle:${proximidad.latitude},${proximidad.longitude},10000',
     'region': 'CU',
-    'key':'AIzaSyD02_rRNBExD1cmU8I684O-Kt5UGsN3Hs4' // Ajusta el radio según sea necesario
+    'key':'AIzaSyD02_rRNBExD1cmU8I684O-Kt5UGsN3Hs4', // Ajusta el radio según sea necesario
+    'language': 'es',
+    'maxresults': 10
   };
+   final response = await _dio.get(url,queryParameters: params );
 try{
-  if ( true
-  //  response.statusCode ==  200 && response.data['status'] == 'OK'
+  if ( 
+    response.statusCode ==  200 && response.data['status'] == 'OK'
     ) {
  // return  response.data;
  //TODO:CambiarJsonString por response.data
- return FindPlacesRespose.fromJson(jsonString);
+ return FindPlacesRespose.fromJson(response.data);
  // } else {
  //  throw Exception('Error al buscar lugares: ${response.data['error_message']}');
   }
@@ -121,5 +117,23 @@ void getSugerenciasPorQuery( String busqueda, LatLng proximidad ) {
   Future.delayed(Duration(milliseconds: 201)).then((_) => timer.cancel());
 
 }
+//  Future<String> getAddress(double latitude, double longitude) async {
+//   final String apiKey = 'TU_CLAVE_API'; // Reemplaza 'TU_CLAVE_API' con tu clave API de Google Cloud
+//   final String url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyD02_rRNBExD1cmU8I684O-Kt5UGsN3Hs4';
+
+//   final response = _dio.get(url);
+
+//   if (response.statusCode ==  200) {
+//     final data = jsonDecode(response.body);
+//     if (data['status'] == 'OK') {
+//       final String address = data['results'][0]['formatted_address'];
+//       return address;
+//     } else {
+//       throw Exception('Error al obtener la dirección: ${data['status']}');
+//     }
+//   } else {
+//     throw Exception('Error al realizar la petición: ${response.statusCode}');
+//   }
+// }
 }
 

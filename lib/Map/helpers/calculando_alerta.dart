@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void calculandoAlerta(BuildContext context) {
+Future<void> calculandoAlerta(BuildContext context) async {
   if (Platform.isAndroid) {
     showDialog(
       context: context,
